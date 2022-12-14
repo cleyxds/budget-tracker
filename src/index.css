@@ -1,5 +1,8 @@
 :root {
   --background: #1e1e1e;
+  --white: #ffffff;
+
+  --navbar-height: 4rem;
 }
 
 body {

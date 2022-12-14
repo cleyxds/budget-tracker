@@ -1,7 +1,8 @@
-<script lang="ts">
-  import Header from "./components/Header.svelte"
+<script>
+
+  import { Router } from "@roxi/routify"
+  import { routes } from "../.routify/routes"
+
 </script>
 
-<main>
-  <Header />
-</main>
+<Router routes={routes} />
