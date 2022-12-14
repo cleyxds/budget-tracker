@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "run-p dev:*",
+    "host": "run-p dev:host dev:routify",
     "dev:routify": "routify",
     "dev:vite": "vite",
+    "dev:host": "vite --host",
     "preview": "vite preview",
     "build": "run-s build:*",
     "build:routify": "routify -b",
