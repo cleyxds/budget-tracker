@@ -1,10 +1,15 @@
 :root {
-  --background: #1e1e1e;
-  --white: #ffffff;
+  --light-background: #fcfcfd;
+  --dark-background: #1e1e1e;
+  --white-I: #eaeaea;
+  --white-II: #eae9f0;
+  --black-I: #262626;
+  --black-II: #2c2646;
+  --gray-I: #908ba6;
 
   --navbar-height: 4rem;
 }
 
 body {
-  background-color: var(--background);
+  background-color: var(--light-background);
 }

@@ -5,6 +5,8 @@
   import OverviewIcon from "../assets/icons/Overview.svelte"
   import CalendarIcon from "../assets/icons/Calendar.svelte"
 
+  import { authentication } from "../stores/authentication"
+
 </script>
 
 <style>
@@ -42,18 +44,17 @@
 <footer class="navBarContainer">
   <a href={$url('./')}>
     <OverviewIcon />
-    Overview
+    Expenses
   </a>
   <a href={$url('./overview')} type="selected">
     <CalendarIcon />
     This Month
   </a>
-  <a href={$url('./#')}>
-    <OverviewIcon />
-    Offers
-  </a>
-  <a href={$url('./profile')}>
-    <OverviewIcon />
-    Profile
-  </a>
+
+  {#if $authentication.isAuthenticated}
+    <a href={$url('./profile')}>
+      <OverviewIcon />
+      Credit score
+    </a>
+  {/if}
 </footer>
