@@ -2,12 +2,59 @@
 
   import Screen from "../components/Screen.svelte"
   import NavBar from "../components/NavBar.svelte"
+  import Progress from "../components/Progress.svelte"
+  import Expenses from "../components/Expenses.svelte"
 
   import { authentication } from '../stores/authentication';
   import { user } from '../stores/user';
   
   let className
 
+  let monthlyBudget = 1500
+  let spendThisMonth = 667.87
+  let leftToSpend = monthlyBudget - spendThisMonth
+
+  let progress = Math.round((((spendThisMonth * 100) /monthlyBudget) + Number.EPSILON) * 100) / 100
+
+  const autoAndTransportExpenses = [
+    {
+      name: "Auto & transport",
+      price: 350,
+      maxPrice: 536
+    },
+    {
+      name: "Auto insurance",
+      price: 250,
+      maxPrice: 370
+    },
+  ]
+
+  const billAndUtilitiesExpenses = [
+    {
+      name: "Subscriptions",
+      price: 52,
+      maxPrice: 52
+    },
+    {
+      name: "House service",
+      price: 138,
+      maxPrice: 148
+    },
+    {
+      name: "Maintenance",
+      price: 130,
+      maxPrice: 160
+    },
+  ]
+
+  const gamingPcExpenses = [
+    {
+      name: "Placa-mãe",
+      price: 200,
+      maxPrice: 421
+    },
+  ]
+  
   authentication.subscribe(({isAuthenticated}) => {
 		if (!isAuthenticated) {
       className = `landingContainer unautheneticatedContainer`
@@ -123,33 +170,6 @@
 
     background-color: var(--dark-background);
   }
-
-  .expenseItem {
-    padding: 20px 20px 24px;
-
-    box-shadow: 0px 25px 40px -10px rgba(0, 0, 0, 0.06);
-
-    background-color: var(--light-background);
-
-    border: 1px solid var(--white-II);
-    border-radius: 18px;
-
-    margin: 0px 16px 20px;
-  }
-
-  .expenseItem div {
-    min-height: 45px;
-    background-color: lightblue;
-
-    margin-bottom: 20px;
-  }
-
-  .expenseItem section {
-    min-height: 45px;
-    background-color: pink;
-
-    margin-bottom: 27px;
-  }
 </style>
 
 <Screen>
@@ -168,46 +188,30 @@
       <div class="monthlyUserExpense">
         <p>December 2022</p>
         
-        <span>$0,00</span>
+        <span>${spendThisMonth}</span>
       </div>
 
       <div class="monthlyCalculated">
         <section>
           <div>
             <p>Left to spent</p>
-            <span>$1,500</span>
+            <span>${leftToSpend}</span>
           </div>
   
           <div>
             <p>Monthly budget</p>
-            <span>$1,500</span>
+            <span>${monthlyBudget}</span>
           </div>
 
         </section>
         
-        <div type="progress" />
+        <Progress progress={progress} />
       </div>
 
-      <div class="expenseItem">
-        <div>
+      <Expenses title="Auto & transport" total={700} color="var(--expense-tertiary)" expenses={autoAndTransportExpenses} />
+      <Expenses title="Bill & Utilities" total={320} color="var(--expense-primary)" expenses={billAndUtilitiesExpenses} />
+      <Expenses title="Gaming PC" total={421} color="var(--expense-secondary)" expenses={gamingPcExpenses} />
 
-        </div>
-
-        <section>
-
-        </section>
-      </div>
-
-      <div class="expenseItem">
-        <div>
-
-        </div>
-
-        <section />
-        <section />
-        <section />
-        <section />
-      </div>
     {/if}
   </div>
 </Screen>

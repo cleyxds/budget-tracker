@@ -6,8 +6,13 @@
   --black-I: #262626;
   --black-II: #2c2646;
   --gray-I: #908ba6;
+  --gray-II: #aeabc2;
 
   --navbar-height: 4rem;
+
+  --expense-primary: #f46040;
+  --expense-secondary: #56bada;
+  --expense-tertiary: #6347eb;
 }
 
 body {
