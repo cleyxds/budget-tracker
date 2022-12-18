@@ -5,6 +5,8 @@
   import Progress from "../components/Progress.svelte"
   import Expenses from "../components/Expenses.svelte"
 
+  import ArrowDown from "../assets/icons/ArrowDown.svelte"
+
   import { authentication } from '../stores/authentication';
   import { user } from '../stores/user';
   
@@ -63,6 +65,10 @@
 
     className = "landingContainer"
 	})
+
+  function openSelectMonthModal() {
+    alert("selecting month")
+  }
 
 </script>
 
@@ -129,9 +135,20 @@
     font-weight: 400;
     line-height: 20px;
 
-
     margin-bottom: 4px;
+  }
+  
+  .monthlyUserExpense section {
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+
     margin-top: 16px;
+  }
+
+  .monthlyUserExpense section p {
+    margin-right: 4px;
   }
 
   .monthlyUserExpense span {
@@ -197,7 +214,10 @@
       </div>
 
       <div class="monthlyUserExpense">
-        <p>December 2022</p>
+        <section on:click={openSelectMonthModal}>
+          <p>December 2022</p>
+          <ArrowDown />
+        </section>
         
         <span>${spendThisMonth}</span>
       </div>
