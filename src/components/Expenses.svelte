@@ -50,13 +50,19 @@
   }
 
   .expenseItem div article p {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+
     font-size: 17.12px;
     line-height: 29.96px;
 
     color: var(--black-II);
   }
-
+  
   .expenseItem div article span {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+
     font-size: 17.12px;
     line-height: 29.96px;
 
@@ -71,6 +77,16 @@
     min-height: 50.14px;
 
     margin-top: 28.89px;
+
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+  }
+
+  .expense div h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+
+    color: var(--gray-II);
   }
 </style>
 

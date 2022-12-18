@@ -97,6 +97,11 @@
 
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+
     background-color: var(--light-background);
     color: var(--black-II);
   }
@@ -119,14 +124,19 @@
   }
 
   .monthlyUserExpense p {
+    font-family: 'Open Sans', sans-serif;
     font-size: 14px;
+    font-weight: 400;
     line-height: 20px;
+
 
     margin-bottom: 4px;
     margin-top: 16px;
   }
 
   .monthlyUserExpense span {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 700;
     font-size: 48px;
     line-height: 58px;
   }
@@ -154,21 +164,22 @@
 
   .monthlyCalculated div p {
     color: var(--gray-I);
+
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+
     font-size: 14px;
     line-height: 20px;
   }
 
   .monthlyCalculated div span {
     color: var(--black-II);
+
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+
     font-size: 18px;
     line-height: 28px;
-  }
-
-  .monthlyCalculated div[type=progress] {
-    height: 8px;
-    border-radius: 9999px;
-
-    background-color: var(--dark-background);
   }
 </style>
 
