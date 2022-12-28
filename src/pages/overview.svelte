@@ -4,6 +4,8 @@
 
   import { Dialog } from "@rgossiaux/svelte-headlessui"
 
+  import Cookies from 'js-cookie'
+
   let isOpen = false
 
   import Screen from '../components/Screen.svelte'
@@ -12,10 +14,12 @@
   import { authentication } from "../stores/authentication"
   import { user, DEFAULT_USER } from "../stores/user"
 
-  function handleLogin(event) {
-    const formData = new FormData(event?.target)
+  import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+  import { auth,userDoc } from '../services/firebase'
+  import { setDoc } from 'firebase/firestore'
 
-    formData?.append("id", new String(Math.round(Math.random() * 100)))
+  async function handleLogin(event) {
+    const formData = new FormData(event?.target)
 
     const formdata = {}
     for (let field of formData) {
@@ -23,27 +27,53 @@
       formdata[key] = value
     }
 
-    authentication.update(state => ({
-      ...state,
-      isAuthenticated: !state?.isAuthenticated
-    }))
-
-    isOpen = false
-
-    if (!$authentication.isAuthenticated) {
-      user.set(DEFAULT_USER)
-      return
+    function proceedAppAuthentication({ redirect = true }) {
+      authentication.update(state => ({
+        ...state,
+        isAuthenticated: !state?.isAuthenticated
+      }))
+  
+      isOpen = false
+  
+      if (!$authentication.isAuthenticated) {
+        user.set(DEFAULT_USER)
+        return
+      }
+  
+      if ($authentication.isAuthenticated) {
+        user.update(state => ({
+          ...state,
+          id: formdata?.id,
+          name: formdata?.email
+        }))
+  
+        if (redirect) $goto('/')
+        return
+      }
     }
 
-    if ($authentication.isAuthenticated) {
-      user.update(state => ({
-        ...state,
-        id: formdata?.id,
-        name: formdata?.email
-      }))
+    async function updateUserCookie({ userId = "" }) {
+      Cookies.set('JSESSIONID', userId)
+    }
 
-      $goto('/')
-      return
+    try {
+      const user = await createUserWithEmailAndPassword(
+          auth,
+          formdata?.email,
+          formdata?.password,
+      )
+      await updateProfile(user.user, { displayName: formdata?.email })
+
+      await setDoc(userDoc(auth.currentUser.uid), {
+          username: user.user.displayName,
+          email: user.user.email
+      })
+
+      await updateUserCookie({ userId: auth.currentUser.uid })
+
+      proceedAppAuthentication({ redirect: true })
+    } catch (error) {
+      console.warn('error from creating user', error)
     }
   }
 </script>
@@ -103,12 +133,12 @@
       
       <label for="email" class="formInputs commonMargin">
         Email
-        <input type="email" name="email">
+        <input type="email" name="email" required>
       </label>
 
       <label for="password" class="formInputs commonMargin">
         Password
-        <input type="password" name="password">
+        <input type="password" name="password" required>
       </label>
 
       <button type="submit" class="commonMargin">Submit</button>

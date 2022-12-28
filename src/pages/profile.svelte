@@ -3,36 +3,35 @@
   import Screen from "../components/Screen.svelte"
   import NavBar from "../components/NavBar.svelte"
 
-  import {authentication} from "../stores/authentication"
+  import Cookies from 'js-cookie'
+
+  import { authentication } from "../stores/authentication"
   import { user, DEFAULT_USER } from "../stores/user"
 
-  function handleLogin() {
-    authentication.update(state => ({
-      ...state,
-      isAuthenticated: !state?.isAuthenticated
-    }))
+  async function handleLogout() {
+    try {
+      Cookies.remove('JSESSIONID')
 
-    if (!$authentication.isAuthenticated) {
-      user.set(DEFAULT_USER)
-      return
-    }
-
-    if ($authentication.isAuthenticated) {
-      user.update(state => ({
+      authentication.update(state => ({
         ...state,
-        id: "1",
-        name: "Cleyson"
+        isAuthenticated: false
       }))
-
-      return
+  
+      if (!$authentication.isAuthenticated) {
+        user.set(DEFAULT_USER)
+        return
+      }
+      
+    } catch (error) {
+      console.warn(error)
     }
   }
 
 </script>
 
 <Screen>
-  <button on:click={handleLogin}>
-    Log in
+  <button on:click={handleLogout}>
+    Log out
   </button>
 </Screen>
 
