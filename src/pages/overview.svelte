@@ -54,7 +54,8 @@
     flex-direction: column;
     
     min-height: 32px;
-    width: 400px;
+    width: 40%;
+    align-self: center;
 
     padding: 0 1.5rem 1.5rem 1.5rem;
 
@@ -75,6 +76,7 @@
   .authenticationContainerPosition {
     position: absolute;
     top: 4%;
+    left: 2%;
   }
 
   .formInputs {
@@ -85,6 +87,12 @@
   .commonMargin {
     margin-top: 1.5rem;
   }
+
+  @media only screen and (max-width: 600px) {
+    .authenticationContainer {
+      width: 80%;
+    }
+}
 </style>
 
 <Screen>
