@@ -83,7 +83,7 @@
   }
 
   .landingContainer h1 {
-    font-size: 4rem;
+    font-size: 3rem;
     line-height: 5rem;
     text-transform: uppercase;
   }

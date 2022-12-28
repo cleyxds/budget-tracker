@@ -151,6 +151,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@rgossiaux/svelte-headlessui@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@rgossiaux/svelte-headlessui/-/svelte-headlessui-1.0.2.tgz#9493251a40cd56d8bdc8f0f64623d886bb872b1e"
+  integrity sha512-sauopYTSivhzXe1kAvgawkhyYJcQlK8Li3p0d2OtcCIVprOzdbard5lbqWB4xHDv83zAobt2mR08oizO2poHLQ==
+
 "@roxi/routify@^2.18.8":
   version "2.18.8"
   resolved "https://registry.yarnpkg.com/@roxi/routify/-/routify-2.18.8.tgz#1b773077300156d4459cbeaafeae17e465953ae0"
