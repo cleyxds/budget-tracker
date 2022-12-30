@@ -1,11 +1,14 @@
 <script>
 
-  import {authentication} from "../stores/authentication"
-  import {user} from "../stores/user"
+  import { authentication } from "../stores/authentication"
+  import { user } from "../stores/user"
 
   import MonthlyExpenses from "./MonthlyExpenses.svelte"
   import Progress from "./Progress.svelte"
   import ExpensesItem from "./ExpensesItem.svelte"
+  import Greeting from "./Greeting.svelte"
+
+  import { handleAddExpense } from "../lib/utils/expenses"
 
   let monthlyBudget = 1500
   let spendThisMonth = 667.87
@@ -52,41 +55,12 @@
     },
   ]
 
+  const greetingBarActions = {
+    handleAddExpense
+  }
 </script>
 
 <style>
-  .greetingContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    min-height: 32px;
-
-    margin: 12px 1rem 4px 1rem;
-    padding: 4px 24px;
-
-    border: 1px solid var(--white-II);
-    border-radius: 9999px;
-
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 28px;
-
-    background-color: var(--light-background);
-    color: var(--black-II);
-  }
-
-  .greetingContainer p {
-    align-self: center;
-  }
-
-  .greetingContainer p {
-    margin-left: auto;
-  }
-
   .monthlyCalculated {
     padding: 14px 20px 20px;
 
@@ -158,11 +132,7 @@
 </style>
 
 {#if $authentication.isAuthenticated}
-  <div class="greetingContainer">
-    <span>Hello {$user?.name}</span>
-
-    <p>Hello</p>
-  </div>
+  <Greeting user={user} actions={greetingBarActions} />
 
   <div class="monthlyUserExpense">
     <MonthlyExpenses />
