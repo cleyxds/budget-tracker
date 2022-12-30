@@ -21,3 +21,7 @@
 body {
   background-color: var(--light-background);
 }
+
+button {
+  cursor: pointer;
+}

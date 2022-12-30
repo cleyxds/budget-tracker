@@ -1,17 +1,94 @@
 <script>
 
-  import Progress from "./Progress.svelte"
+  import {authentication} from "../stores/authentication"
+  import {user} from "../stores/user"
 
-  export let title
-  export let total
-  export let color
-  export let expenses
+  import MonthlyExpenses from "./MonthlyExpenses.svelte"
+  import Progress from "./Progress.svelte"
+  import ExpensesItem from "./ExpensesItem.svelte"
+
+  let monthlyBudget = 1500
+  let spendThisMonth = 667.87
+  let leftToSpend = monthlyBudget - spendThisMonth
+
+  let progress = Math.round((((spendThisMonth * 100) /monthlyBudget) + Number.EPSILON) * 100) / 100
+
+  const autoAndTransportExpenses = [
+    {
+      name: "Auto & transport",
+      price: 350,
+      maxPrice: 536
+    },
+    {
+      name: "Auto insurance",
+      price: 250,
+      maxPrice: 370
+    },
+  ]
+
+  const billAndUtilitiesExpenses = [
+    {
+      name: "Subscriptions",
+      price: 52,
+      maxPrice: 52
+    },
+    {
+      name: "House service",
+      price: 138,
+      maxPrice: 148
+    },
+    {
+      name: "Maintenance",
+      price: 130,
+      maxPrice: 160
+    },
+  ]
+
+  const gamingPcExpenses = [
+    {
+      name: "Placa-mãe",
+      price: 200,
+      maxPrice: 421
+    },
+  ]
 
 </script>
 
 <style>
-  .expenseItem {
-    padding: 20px 20px 24px;
+  .greetingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    min-height: 32px;
+
+    margin: 12px 1rem 4px 1rem;
+    padding: 4px 24px;
+
+    border: 1px solid var(--white-II);
+    border-radius: 9999px;
+
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+
+    background-color: var(--light-background);
+    color: var(--black-II);
+  }
+
+  .greetingContainer p {
+    align-self: center;
+  }
+
+  .greetingContainer p {
+    margin-left: auto;
+  }
+
+  .monthlyCalculated {
+    padding: 14px 20px 20px;
 
     box-shadow: 0px 25px 40px -10px rgba(0, 0, 0, 0.06);
 
@@ -23,99 +100,94 @@
     margin: 0px 16px 20px;
   }
 
-  .expenseItem div {
+  .monthlyCalculated section {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-  }
-
-  .expenseItem div svg {
-    width: 48.14px;
-    height: 48.14px;
-
-    border-radius: 14.98px;
-
-    margin-right: 17.12px;
-
-    opacity: 30%;
-
-    justify-content: center;
     align-items: center;
+    
+    margin-bottom: 1rem;
   }
 
-  .expenseItem div article {
-    display: flex;
-    flex: 1;
-    justify-content: space-between;
-  }
+  .monthlyCalculated div p {
+    color: var(--gray-I);
 
-  .expenseItem div article p {
     font-family: 'DM Sans', sans-serif;
     font-weight: 400;
 
-    font-size: 17.12px;
-    line-height: 29.96px;
+    font-size: 14px;
+    line-height: 20px;
+  }
 
+  .monthlyCalculated div span {
     color: var(--black-II);
-  }
-  
-  .expenseItem div article span {
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 400;
-
-    font-size: 17.12px;
-    line-height: 29.96px;
-
-    color: var(--gray-II);
-  }
-
-  .expense {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    min-height: 50.14px;
-
-    margin-top: 28.89px;
 
     font-family: 'DM Sans', sans-serif;
     font-weight: 700;
+
+    font-size: 18px;
+    line-height: 28px;
   }
 
-  .expense div h3 {
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 400;
+  .monthlyUserExpense {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    color: var(--gray-II);
+    position: sticky;
+    top: 0px;
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    margin-bottom: 28px;
+    
+    color: var(--black-I);
+  }
+
+  .monthlyUserExpense section p {
+    margin-right: 4px;
+  }
+
+  .monthlyUserExpense span {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 58px;
   }
 </style>
 
-<div class="expenseItem">
-  <div>
-    <svg style:background-color={color}>
-      
-    </svg>
-    
-    <article>
-      <p>{title}</p>
-      <span>${total}</span>
-    </article>
+{#if $authentication.isAuthenticated}
+  <div class="greetingContainer">
+    <span>Hello {$user?.name}</span>
+
+    <p>Hello</p>
   </div>
 
-  {#each expenses as expense, index}
-    <section class="expense">
+  <div class="monthlyUserExpense">
+    <MonthlyExpenses />
+    
+    <span>${spendThisMonth}</span>
+  </div>
+
+  <div class="monthlyCalculated">
+    <section>
       <div>
-        <p>{expense?.name}</p>
-        <p>${expense?.price}</p>
+        <p>Left to spent</p>
+        <span>${leftToSpend}</span>
       </div>
-      
+
       <div>
-        <div style:margin-right="27.82px" style:flex={1}>
-          <Progress color={color} progress={Math.round((((expense?.price * 100) / expense?.maxPrice) + Number.EPSILON) * 100) / 100} />
-        </div>
-        
-        <h3>Left ${expense?.maxPrice - expense?.price}</h3>
+        <p>Monthly budget</p>
+        <span>${monthlyBudget}</span>
       </div>
+
     </section>
-  {/each}
-</div>
+    
+    <Progress progress={progress} />
+  </div>
+
+  <ExpensesItem title="Auto & transport" total={700} color="var(--expense-tertiary)" expenses={autoAndTransportExpenses} />
+  <ExpensesItem title="Bill & Utilities" total={320} color="var(--expense-primary)" expenses={billAndUtilitiesExpenses} />
+  <ExpensesItem title="Gaming PC" total={421} color="var(--expense-secondary)" expenses={gamingPcExpenses} />
+{/if}
