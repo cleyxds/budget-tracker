@@ -8,7 +8,8 @@
   import ExpensesItem from "./ExpensesItem.svelte"
   import Greeting from "./Greeting.svelte"
 
-  import { handleAddExpense } from "../lib/utils/expenses"
+  import { handleAddExpense, handleGetUserExpenses } from "../lib/utils/expenses"
+  import { onMount } from "svelte"
 
   let monthlyBudget = 1500
   let spendThisMonth = 667.87
@@ -16,48 +17,18 @@
 
   let progress = Math.round((((spendThisMonth * 100) /monthlyBudget) + Number.EPSILON) * 100) / 100
 
-  const autoAndTransportExpenses = [
-    {
-      name: "Auto & transport",
-      price: 350,
-      maxPrice: 536
-    },
-    {
-      name: "Auto insurance",
-      price: 250,
-      maxPrice: 370
-    },
-  ]
-
-  const billAndUtilitiesExpenses = [
-    {
-      name: "Subscriptions",
-      price: 52,
-      maxPrice: 52
-    },
-    {
-      name: "House service",
-      price: 138,
-      maxPrice: 148
-    },
-    {
-      name: "Maintenance",
-      price: 130,
-      maxPrice: 160
-    },
-  ]
-
-  const gamingPcExpenses = [
-    {
-      name: "Placa-mãe",
-      price: 200,
-      maxPrice: 421
-    },
-  ]
+  let expenses = []
 
   const greetingBarActions = {
     handleAddExpense
   }
+
+  onMount(async () => {
+    const userExpenses = await handleGetUserExpenses({ userId: $user?.id})
+    
+    expenses = userExpenses
+  })
+
 </script>
 
 <style>
@@ -157,7 +128,7 @@
     <Progress progress={progress} />
   </div>
 
-  <ExpensesItem title="Auto & transport" total={700} color="var(--expense-tertiary)" expenses={autoAndTransportExpenses} />
-  <ExpensesItem title="Bill & Utilities" total={320} color="var(--expense-primary)" expenses={billAndUtilitiesExpenses} />
-  <ExpensesItem title="Gaming PC" total={421} color="var(--expense-secondary)" expenses={gamingPcExpenses} />
+  {#each expenses as expense}
+    <ExpensesItem title={expense?.title} total={expense?.total} color={expense?.color} expenses={expense?.expenses} />
+  {/each}
 {/if}

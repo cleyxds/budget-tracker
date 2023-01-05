@@ -7,8 +7,11 @@ import { firebaseConfig } from "../../firebase.config.js"
 const app = initializeApp(firebaseConfig)
 
 const auth = getAuth(app)
-let db = getFirestore(app)
+const db = getFirestore(app)
 
 const userDoc = (userId) => doc(db, "users", userId)
+const expenseDoc = (expenseId) => doc(db, "expense", expenseId)
 
-export { auth, userDoc }
+const expensesCollection = collection(db, "expenses")
+
+export { auth, userDoc, expensesCollection, expenseDoc }
