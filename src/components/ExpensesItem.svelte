@@ -7,6 +7,14 @@
   export let color
   export let expenses
 
+  function formatProgressValue(expense) {
+    return Math.round((((expense?.price * 100) / expense?.maxPrice) + Number.EPSILON) * 100) / 100
+  }
+
+  function truncatePrice(value = 0) {
+    return Math.round((value + Number.EPSILON) * 100) / 100
+  }
+
 </script>
 
 <style>
@@ -106,15 +114,15 @@
     <section class="expense">
       <div>
         <p>{expense?.name}</p>
-        <p>${expense?.price}</p>
+        <p>${truncatePrice(expense?.price)}</p>
       </div>
       
       <div>
         <div style:margin-right="27.82px" style:flex={1}>
-          <Progress color={color} progress={Math.round((((expense?.price * 100) / expense?.maxPrice) + Number.EPSILON) * 100) / 100} />
+          <Progress color={color} progress={formatProgressValue(expense)} />
         </div>
         
-        <h3>Left ${expense?.maxPrice - expense?.price}</h3>
+        <h3>Left ${truncatePrice(expense?.maxPrice - expense?.price)}</h3>
       </div>
     </section>
   {/each}

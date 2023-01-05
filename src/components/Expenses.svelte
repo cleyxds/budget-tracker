@@ -1,5 +1,6 @@
 <script>
 
+  import { onMount } from "svelte"
   import { authentication } from "../stores/authentication"
   import { user } from "../stores/user"
 
@@ -9,13 +10,17 @@
   import Greeting from "./Greeting.svelte"
 
   import { handleAddExpense, handleGetUserExpenses } from "../lib/utils/expenses"
-  import { onMount } from "svelte"
+  import { getUserData } from "../lib/utils/user"
 
-  let monthlyBudget = 1500
-  let spendThisMonth = 667.87
-  let leftToSpend = monthlyBudget - spendThisMonth
+  let monthlyBudget = null
+  let spendThisMonth = null
+  $: leftToSpend = monthlyBudget - spendThisMonth
+  $: didExtrapolate = leftToSpend >= monthlyBudget
 
-  let progress = Math.round((((spendThisMonth * 100) /monthlyBudget) + Number.EPSILON) * 100) / 100
+  $: extrapolateBudgetTextColorI = didExtrapolate ? "var(--red-I)" : "var(--gray-I)"
+  $: extrapolateBudgetTextColorII = didExtrapolate ? "var(--red-I)" : "var(--black-II)"
+
+  $: progress = Math.round((((spendThisMonth * 100) / monthlyBudget) + Number.EPSILON) * 100) / 100
 
   let expenses = []
 
@@ -24,8 +29,11 @@
   }
 
   onMount(async () => {
+    const userData = await getUserData({ userId: $user?.id })
     const userExpenses = await handleGetUserExpenses({ userId: $user?.id})
-    
+
+    monthlyBudget = userData?.monthlyBudget
+    spendThisMonth = userData?.spendThisMonth
     expenses = userExpenses
   })
 
@@ -114,8 +122,8 @@
   <div class="monthlyCalculated">
     <section>
       <div>
-        <p>Left to spent</p>
-        <span>${leftToSpend}</span>
+        <p style:color={extrapolateBudgetTextColorI}>Left to spent</p>
+        <span style:color={extrapolateBudgetTextColorII}>${leftToSpend}</span>
       </div>
 
       <div>
