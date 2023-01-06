@@ -90,7 +90,7 @@ async function handleGoogleRegister() {
 }
 
 async function updateUserCookie({ userId }) {
-  Cookies.set("JSESSIONID", userId)
+  Cookies.set("JSESSIONID", userId, { expires: 7 })
 }
 
 async function removeUserCookie() {
