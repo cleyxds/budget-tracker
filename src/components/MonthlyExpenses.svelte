@@ -6,20 +6,19 @@
     MenuItems,
     MenuItem,
   } from "@rgossiaux/svelte-headlessui";
-  
-  import ArrowDown from "../assets/icons/ArrowDown.svelte"
 
-  function handleSelectMonth({month}) {
-    selectedMonth = month
+  function handleSelectMonth({ month }) {
+    selectedMonth = month    
   }
 
   let availableMonths = [
     "October 2022",
     "November 2022",
-    "December 2022"
+    "December 2022",
+    "January 2023"
   ]
 
-  let selectedMonth = "December 2022"
+  let selectedMonth = "January 2023"
 
 </script>
 
@@ -33,7 +32,6 @@
     margin-top: 16px;
   }
 
-  /* :global(.monthlyExpensesContainer p) { */
   :global(.theText) {
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
@@ -47,28 +45,42 @@
   :global(.monthlyExpensesPopover) {
     position: absolute;
 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
     min-width: 140px;
-    padding: 0 1rem 1rem 1rem;
-    border-radius: 12px;
 
-    background-color: var(--gray-II);
-    z-index: 10;
+    margin-top: 1rem;
+    padding: 0 1rem 1rem 1rem;
+
+    border-radius: 8px;
+    
+    background-color: var(--light-background);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+    transform: translateX(-25%);
+  }
+
+  :global(.monthlyExpensesPopover p:hover) {
+    opacity: .7;
+    cursor: pointer;
   }
 </style>
 
 <Menu>
-  <MenuButton class="theText monthlyExpensesContainer" as="h1">{selectedMonth}</MenuButton>
+  <MenuButton let:open class="theText monthlyExpensesContainer" as="h1">{selectedMonth}</MenuButton>
 
   <MenuItems class="monthlyExpensesPopover">
-    <MenuItem let:active>
-      <a href="/account-settings" class:active>Account settings</a>
-    </MenuItem>
-    <MenuItem let:active>
-      <a href="/documentation" class:active>Documentation</a>
-    </MenuItem>
-    <MenuItem disabled>
-      <span class="disabled">Invite a friend (coming soon!)</span>
-    </MenuItem>
+    {#each availableMonths as month}
+      <MenuItem>
+        <p on:keydown={() => {}} on:click={() => handleSelectMonth({month})} style="margin-top: 1rem;">
+          {month}
+        </p>
+      </MenuItem>
+    {/each}
+
   </MenuItems>
 </Menu>
 

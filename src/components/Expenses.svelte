@@ -9,7 +9,7 @@
   import ExpensesItem from "./ExpensesItem.svelte"
   import Greeting from "./Greeting.svelte"
 
-  import { handleAddExpense, handleGetUserExpenses } from "../lib/utils/expenses"
+  import { handleAddExpenses, handleGetUserExpenses } from "../lib/utils/expenses"
   import { getUserData } from "../lib/utils/user"
 
   let monthlyBudget = null
@@ -25,7 +25,7 @@
   let expenses = []
 
   const greetingBarActions = {
-    handleAddExpense
+    handleAddExpenses
   }
 
   onMount(async () => {
@@ -137,6 +137,6 @@
   </div>
 
   {#each expenses as expense}
-    <ExpensesItem title={expense?.title} total={expense?.total} color={expense?.color} expenses={expense?.expenses} />
+    <ExpensesItem {...expense} />
   {/each}
 {/if}

@@ -64,7 +64,7 @@
 
 <section>
   <div class="leftContainer">
-    <span>{firstName}</span>
+    <!-- <span>{firstName}</span> -->
   </div>
 
   <div class="middleContainer">
@@ -72,7 +72,7 @@
   </div>
 
   <div class="rightContainer">
-    <div on:keydown={() => {}} on:click={actions?.handleAddExpense} class="iconContainer">
+    <div on:keydown={() => {}} on:click={actions?.handleAddExpenses} class="iconContainer">
       <PlusIcon />
     </div>
   </div>

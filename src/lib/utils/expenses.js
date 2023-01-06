@@ -1,8 +1,48 @@
-import { getDoc, getDocs, query, where } from "firebase/firestore"
-import { expensesCollection, expenseDoc } from "../../services/firebase"
+import {
+  addDoc,
+  arrayUnion,
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore"
 
-export async function handleAddExpense({}) {
+import {
+  expensesCollection,
+  expenseCollection,
+  expenseDoc,
+  expensesDoc,
+} from "../../services/firebase"
+
+export async function handleAddExpenses({}) {
   alert("Pelé é o melhor!")
+}
+
+export async function handleAddExpense({ event, expensesId, onEnd }) {
+  const formData = new FormData(event?.target)
+
+  const formdata = {}
+  for (let field of formData) {
+    const [key, value] = field
+    formdata[key] = value
+  }
+
+  try {
+    const expenseRef = await addDoc(expenseCollection, {
+      maxPrice: Number(formdata?.price),
+      name: formdata?.title,
+      price: 0,
+    })
+
+    const expenseId = expenseRef?.id
+
+    await updateExpensesById({ expenseId, expensesId })
+  } catch (error) {
+    console.error(error)
+  } finally {
+    await onEnd()
+  }
 }
 
 export async function handleGetUserExpenses({ userId }) {
@@ -65,7 +105,10 @@ async function getAllExpense({ expensesId }) {
       })
 
       const refinedResponse = await Promise.all(response)
-      const real = refinedResponse?.map((item) => item?.data())
+      const real = refinedResponse?.map((item) => ({
+        ...item?.data(),
+        id: item?.id,
+      }))
 
       return real
     })
@@ -76,4 +119,10 @@ async function getAllExpense({ expensesId }) {
 
     return []
   }
+}
+
+async function updateExpensesById({ expensesId, expenseId }) {
+  await updateDoc(expensesDoc(expensesId), {
+    expenseId: arrayUnion(expenseId),
+  })
 }

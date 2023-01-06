@@ -11,7 +11,16 @@ const db = getFirestore(app)
 
 const userDoc = (userId) => doc(db, "users", userId)
 const expenseDoc = (expenseId) => doc(db, "expense", expenseId)
+const expensesDoc = (expensesId) => doc(db, "expenses", expensesId)
 
 const expensesCollection = collection(db, "expenses")
+const expenseCollection = collection(db, "expense")
 
-export { auth, userDoc, expensesCollection, expenseDoc }
+export {
+  auth,
+  userDoc,
+  expenseDoc,
+  expensesDoc,
+  expensesCollection,
+  expenseCollection,
+}

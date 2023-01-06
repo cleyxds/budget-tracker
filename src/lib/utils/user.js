@@ -3,7 +3,8 @@ import { getDoc } from "firebase/firestore"
 import { userDoc } from "../../services/firebase"
 
 export async function getUserData({ userId }) {
-  const user = await (await getDoc(userDoc(userId))).data()
+  const userRef = await getDoc(userDoc(userId))
+  const user = userRef?.data()
 
   return {
     monthlyBudget: user?.monthlyBudget,
