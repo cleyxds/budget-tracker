@@ -15,11 +15,13 @@ import {
   expensesDoc,
 } from "../../services/firebase"
 
+import { setUserExpenses as refetchUserExpenses } from "./user"
+
 export async function handleAddExpenses({}) {
   alert("Pelé é o melhor!")
 }
 
-export async function handleAddExpense({ event, expensesId, onEnd }) {
+export async function handleAddExpense({ event, expensesId, userId, onEnd }) {
   const formData = new FormData(event?.target)
 
   const formdata = {}
@@ -38,6 +40,8 @@ export async function handleAddExpense({ event, expensesId, onEnd }) {
     const expenseId = expenseRef?.id
 
     await updateExpensesById({ expenseId, expensesId })
+
+    await refetchUserExpenses({ userId })
   } catch (error) {
     console.error(error)
   } finally {
@@ -72,6 +76,10 @@ export async function handleGetUserExpenses({ userId }) {
 
     return []
   }
+}
+
+export async function getExpensesByMonth({ month }) {
+  return console.log(`getting expenses for ${month}`)
 }
 
 async function getExpenses({ userId }) {

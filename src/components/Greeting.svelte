@@ -5,7 +5,7 @@
   export let user
   export let actions = {}
 
-  const firstName = $user?.name.split?.("@")?.[0]
+  $: firstName = user?.username?.split?.("@")?.[0] ?? ""
 
 </script>
 
@@ -64,7 +64,7 @@
 
 <section>
   <div class="leftContainer">
-    <!-- <span>{firstName}</span> -->
+    <span>{firstName}</span>
   </div>
 
   <div class="middleContainer">

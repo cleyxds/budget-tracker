@@ -7,9 +7,17 @@
     MenuItem,
   } from "@rgossiaux/svelte-headlessui";
 
+  import { month as currentMonth } from "./../stores/month"
+
+  import { getExpensesByMonth } from "../lib/utils/expenses"
+
   function handleSelectMonth({ month }) {
-    selectedMonth = month    
+    currentMonth.set(month)
   }
+
+  currentMonth.subscribe(async (month) => {
+    await getExpensesByMonth({ month })
+  })
 
   let availableMonths = [
     "October 2022",
@@ -17,8 +25,6 @@
     "December 2022",
     "January 2023"
   ]
-
-  let selectedMonth = "January 2023"
 
 </script>
 
@@ -70,12 +76,12 @@
 </style>
 
 <Menu>
-  <MenuButton let:open class="theText monthlyExpensesContainer" as="h1">{selectedMonth}</MenuButton>
+  <MenuButton let:open class="theText monthlyExpensesContainer" as="h1">{$currentMonth}</MenuButton>
 
   <MenuItems class="monthlyExpensesPopover">
     {#each availableMonths as month}
       <MenuItem>
-        <p on:keydown={() => {}} on:click={() => handleSelectMonth({month})} style="margin-top: 1rem;">
+        <p on:keydown={() => {}} on:click={() => handleSelectMonth({ month })} style="margin-top: 1rem;">
           {month}
         </p>
       </MenuItem>

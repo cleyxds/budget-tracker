@@ -1,19 +1,22 @@
 <script>
 
-  import { onMount } from "svelte"
   import { authentication } from "../stores/authentication"
+  import { expenses } from "../stores/expenses"
   import { user } from "../stores/user"
 
   import MonthlyExpenses from "./MonthlyExpenses.svelte"
   import Progress from "./Progress.svelte"
   import ExpensesItem from "./ExpensesItem.svelte"
   import Greeting from "./Greeting.svelte"
+  import Loader from "./Loader.svelte"
 
-  import { handleAddExpenses, handleGetUserExpenses } from "../lib/utils/expenses"
-  import { getUserData } from "../lib/utils/user"
+  import { handleAddExpenses } from "../lib/utils/expenses"
 
   let monthlyBudget = null
   let spendThisMonth = null
+  let userData = null
+  let expensesList = []
+
   $: leftToSpend = monthlyBudget - spendThisMonth
   $: didExtrapolate = leftToSpend >= monthlyBudget
 
@@ -22,20 +25,19 @@
 
   $: progress = Math.round((((spendThisMonth * 100) / monthlyBudget) + Number.EPSILON) * 100) / 100
 
-  let expenses = []
+  user.subscribe(user => {
+    monthlyBudget = user?.monthlyBudget
+    spendThisMonth = user?.spendThisMonth
+    userData = user
+  })
+
+  expenses.subscribe(data => {
+    expensesList = data
+  })
 
   const greetingBarActions = {
     handleAddExpenses
   }
-
-  onMount(async () => {
-    const userData = await getUserData({ userId: $user?.id })
-    const userExpenses = await handleGetUserExpenses({ userId: $user?.id})
-
-    monthlyBudget = userData?.monthlyBudget
-    spendThisMonth = userData?.spendThisMonth
-    expenses = userExpenses
-  })
 
 </script>
 
@@ -96,6 +98,8 @@
     margin-bottom: 28px;
     
     color: var(--black-I);
+
+    z-index: 9999;
   }
 
   .monthlyUserExpense section p {
@@ -111,32 +115,41 @@
 </style>
 
 {#if $authentication.isAuthenticated}
-  <Greeting user={user} actions={greetingBarActions} />
+  <Greeting user={userData} actions={greetingBarActions} />
 
   <div class="monthlyUserExpense">
     <MonthlyExpenses />
     
-    <span>${spendThisMonth}</span>
+    {#if spendThisMonth || monthlyBudget}
+      <span>${spendThisMonth}</span>
+    {/if}
   </div>
 
-  <div class="monthlyCalculated">
-    <section>
-      <div>
-        <p style:color={extrapolateBudgetTextColorI}>Left to spent</p>
-        <span style:color={extrapolateBudgetTextColorII}>${leftToSpend}</span>
-      </div>
+  {#if spendThisMonth || monthlyBudget}
+    <div class="monthlyCalculated">
+      <section>
+        <div>
+          <p style:color={extrapolateBudgetTextColorI}>Left to spent</p>
+          <span style:color={extrapolateBudgetTextColorII}>${leftToSpend}</span>
+        </div>
 
-      <div>
-        <p>Monthly budget</p>
-        <span>${monthlyBudget}</span>
-      </div>
+        <div>
+          <p>Monthly budget</p>
 
-    </section>
-    
-    <Progress progress={progress} />
-  </div>
+          {#if monthlyBudget}
+            <span>${monthlyBudget}</span>
+          {:else}
+            <Loader size={28} />
+          {/if}
+        </div>
 
-  {#each expenses as expense}
+      </section>
+      
+      <Progress progress={progress} />
+    </div>
+  {/if}
+
+  {#each expensesList as expense}
     <ExpensesItem {...expense} />
   {/each}
 {/if}

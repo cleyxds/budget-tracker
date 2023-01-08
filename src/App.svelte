@@ -4,40 +4,47 @@
 
   import { Router } from "@roxi/routify"
   import { routes } from "../.routify/routes"
+
+  import Loading from "./components/Loading.svelte"
   
   import { authentication } from "./stores/authentication"
   import { user } from "./stores/user"
 
-  import Cookies from 'js-cookie'
-
-  import { userDoc } from './services/firebase'
-  import { getDoc } from 'firebase/firestore'
-  import Loading from "./components/Loading.svelte"
+  import { getInitialUserData } from "./lib/utils/user"
+  import { expenses } from "./stores/expenses"
 
   let loading = false
 
-  async function getUserCookie() {
-    const JSESSIONID = Cookies.get('JSESSIONID')
+  function initialAuthenticationCallback({ userId, userData }) {
+    authentication.update(state => ({
+      ...state,
+      isAuthenticated: !state?.isAuthenticated
+    }))
 
+    if ($authentication.isAuthenticated) {
+      user.update(state => ({
+        ...state,
+        id: userId,
+        ...userData,
+      }))
+    }
+  }
+
+  function authenticationCallback({ userId, userData }) {
+    if ($authentication.isAuthenticated) {
+      user.update(state => ({
+        ...state,
+        id: userId,
+        ...userData,
+      }))
+    }
+  }
+
+  async function bootstrap() {
     try {
       loading = true
-      const userData = await getDoc(userDoc(JSESSIONID))
 
-      const getUserData = userData?.data()
-
-      authentication.update(state => ({
-        ...state,
-        isAuthenticated: !state?.isAuthenticated
-      }))
-      
-      if ($authentication.isAuthenticated) {
-        user.update(state => ({
-          ...state,
-          id: JSESSIONID,
-          name: getUserData?.email
-        }))
-        return
-      }
+      await getInitialUserData({ authenticationCallback: initialAuthenticationCallback })
     } catch (error) {
 
     } finally {
@@ -46,9 +53,18 @@
 
   }
 
-  onMount(async () => {
-    await getUserCookie()
+  authentication.subscribe(async (data) => {
+    if (data.isAuthenticated) {
+      await getInitialUserData({ authenticationCallback })
+    }
+
+    if (!data?.isAuthenticated) {
+      user.set({ id: null, username: null })
+      expenses.set([])
+    }
   })
+
+  onMount(async () => await bootstrap())
 
 </script>
 

@@ -13,6 +13,7 @@
   export let color
   export let expenses
   export let id
+  export let userId
 
   function formatProgressValue(expense) {
     return Math.round((((expense?.price * 100) / expense?.maxPrice) + Number.EPSILON) * 100) / 100
@@ -200,7 +201,7 @@
               You are creating an expense on <strong>{title}</strong>
             </p>
 
-            <form on:submit|preventDefault={(event) => handleAddExpense({ event, expensesId: id, onEnd: onFinishSubmitExpense })}>
+            <form on:submit|preventDefault={(event) => handleAddExpense({ event, expensesId: id, userId ,onEnd: onFinishSubmitExpense })}>
               <input placeholder="Add title" type="text" required name="title" />
               <input placeholder="Price" type="number" required name="price" />
             
