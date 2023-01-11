@@ -149,7 +149,7 @@
     </div>
   {/if}
 
-  {#each expensesList as expense}
-    <ExpensesItem {...expense} />
+  {#each expensesList as expense, index}
+    <ExpensesItem {...expense} expensesList={expensesList} index={index} />
   {/each}
 {/if}

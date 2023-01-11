@@ -1,8 +1,10 @@
 import {
   addDoc,
   arrayUnion,
+  arrayRemove,
   getDoc,
   getDocs,
+  deleteDoc,
   query,
   updateDoc,
   where,
@@ -40,12 +42,27 @@ export async function handleAddExpense({ event, expensesId, userId, onEnd }) {
     const expenseId = expenseRef?.id
 
     await updateExpensesById({ expenseId, expensesId })
-
-    await refetchUserExpenses({ userId })
   } catch (error) {
     console.error(error)
   } finally {
+    await refetchUserExpenses({ userId })
     await onEnd()
+  }
+}
+
+export async function handleEditExpense({}) {}
+
+export async function handleDeleteExpense({ expenseId, expensesId, userId }) {
+  try {
+    await deleteDoc(expenseDoc(expenseId))
+
+    await updateDoc(expensesDoc(expensesId), {
+      expenseId: arrayRemove(expenseId),
+    })
+  } catch (error) {
+    console.error(error)
+  } finally {
+    await refetchUserExpenses({ userId })
   }
 }
 

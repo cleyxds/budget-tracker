@@ -5,7 +5,7 @@
   import Progress from "./Progress.svelte"
   import PlusIcon from "../assets/icons/PlusIcon.svelte"
 
-  import { handleAddExpense } from "../lib/utils/expenses"
+  import { handleAddExpense, handleDeleteExpense } from "../lib/utils/expenses"
   let isModalExpenseOpen = false;
 
   export let title
@@ -14,6 +14,8 @@
   export let expenses
   export let id
   export let userId
+  export let expensesList
+  export let index
 
   function formatProgressValue(expense) {
     return Math.round((((expense?.price * 100) / expense?.maxPrice) + Number.EPSILON) * 100) / 100
@@ -123,6 +125,24 @@
     color: var(--gray-II);
   }
 
+  .expense svg {
+    width: 16px;
+    height: 16px;
+    
+    background-color: red;
+
+    border-radius: 9999px;    
+  }
+
+  .expense svg:hover {
+    cursor: pointer;
+
+    background-color: var(--gray-II);
+    opacity: .7;
+
+    transition: background-color .7s;
+  }
+
   .dialog {
     display: flex;
     flex-direction: column;
@@ -215,12 +235,15 @@
     </article>
   </div>
 
-  {#each expenses as expense, index}
+  {#each expenses as expense}
     <section class="expense">
       <div>
         <p>{expense?.name}</p>
         <p>${truncatePrice(expense?.price)}</p>
+
       </div>
+
+      <svg on:keydown={() => {}} on:click={() => handleDeleteExpense({ expenseId: expense?.id, expensesId: expensesList?.[index]?.id, userId })} />
       
       <div>
         <div style:margin-right="27.82px" style:flex={1}>
