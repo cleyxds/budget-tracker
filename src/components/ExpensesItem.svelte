@@ -5,7 +5,10 @@
   import Progress from "./Progress.svelte"
   import PlusIcon from "../assets/icons/PlusIcon.svelte"
 
-  import { handleAddExpense, handleDeleteExpense } from "../lib/utils/expenses"
+  import { EDIT_EXPENSE_TYPES, handleAddExpense, handleDeleteExpense,handleEditExpense } from "../lib/utils/expenses"
+  import { truncate } from "../lib/utils/truncate"
+  import { getCurrency } from "../lib/utils/user"
+
   let isModalExpenseOpen = false;
 
   export let title
@@ -13,16 +16,14 @@
   export let color
   export let expenses
   export let id
-  export let userId
+  export let user
   export let expensesList
   export let index
+  
+  $: userId = user?.id
 
   function formatProgressValue(expense) {
     return Math.round((((expense?.price * 100) / expense?.maxPrice) + Number.EPSILON) * 100) / 100
-  }
-
-  function truncatePrice(value = 0) {
-    return Math.round((value + Number.EPSILON) * 100) / 100
   }
 
   function onFinishSubmitExpense() {
@@ -123,6 +124,10 @@
     font-weight: 400;
 
     color: var(--gray-II);
+  }
+
+  .expense div div span {
+    margin-right: 0.25rem;
   }
 
   .expense svg {
@@ -231,7 +236,7 @@
         </Dialog>        
       </div>
       
-      <span>${total}</span>
+      <span>{getCurrency(user?.currency)}{truncate(Number(total))}</span>
     </article>
   </div>
 
@@ -239,7 +244,20 @@
     <section class="expense">
       <div>
         <p>{expense?.name}</p>
-        <p>${truncatePrice(expense?.price)}</p>
+
+        <div>
+          <span>Spent</span>
+
+          <p>{getCurrency(user?.currency)}</p>
+          <p contenteditable="true" on:input={(event) => handleEditExpense({ type: EDIT_EXPENSE_TYPES.PRICE, value: event.currentTarget.innerText, expenseId: expense?.id, userId })}>{truncate(expense?.price)}</p>
+        </div>
+
+        <div>
+          <span>Cost</span>
+
+          <p>{getCurrency(user?.currency)}</p>
+          <p contenteditable="true" on:input={(event) => handleEditExpense({ type: EDIT_EXPENSE_TYPES.MAX_PRICE, value: event.currentTarget.innerText, expenseId: expense?.id, userId })}>{truncate(expense?.maxPrice)}</p>
+        </div>
 
       </div>
 
@@ -250,7 +268,7 @@
           <Progress color={color} progress={formatProgressValue(expense)} />
         </div>
         
-        <h3>Left ${truncatePrice(expense?.maxPrice - expense?.price)}</h3>
+        <h3>Left {getCurrency(user?.currency)}{truncate(expense?.maxPrice - expense?.price)}</h3>
       </div>
     </section>
   {/each}

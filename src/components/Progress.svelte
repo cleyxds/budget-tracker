@@ -19,6 +19,7 @@
     border-radius: 5px;
     background-color: var(--dark-background);
     height: 100%;
+    transition: width 0.7s linear;
   }
 </style>
 

@@ -1,4 +1,4 @@
 export const CURRENCIES = {
-  BRL: "BRL",
-  USD: "USD",
+  BRL: "R$",
+  USD: "$",
 }

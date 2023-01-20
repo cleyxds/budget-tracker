@@ -11,6 +11,8 @@
   import Loader from "./Loader.svelte"
 
   import { handleAddExpenses } from "../lib/utils/expenses"
+  import { getCurrency, handleUpdateUserMonthlyBudget } from "../lib/utils/user"
+  import { truncate } from "../lib/utils/truncate"
 
   let monthlyBudget = null
   let spendThisMonth = null
@@ -25,9 +27,13 @@
 
   $: progress = Math.round((((spendThisMonth * 100) / monthlyBudget) + Number.EPSILON) * 100) / 100
 
+  $: {
+    spendThisMonth = expensesList?.map(item => item?.total)?.reduce((previous, current) => previous + current, 0)
+  }
+
   user.subscribe(user => {
     monthlyBudget = user?.monthlyBudget
-    spendThisMonth = user?.spendThisMonth
+
     userData = user
   })
 
@@ -121,7 +127,7 @@
     <MonthlyExpenses />
     
     {#if spendThisMonth || monthlyBudget}
-      <span>${spendThisMonth}</span>
+      <span>{getCurrency(userData?.currency)}{truncate(spendThisMonth)}</span>
     {/if}
   </div>
 
@@ -130,14 +136,15 @@
       <section>
         <div>
           <p style:color={extrapolateBudgetTextColorI}>Left to spent</p>
-          <span style:color={extrapolateBudgetTextColorII}>${leftToSpend}</span>
+          <span style:color={extrapolateBudgetTextColorII}>{getCurrency(userData?.currency)}{truncate(leftToSpend)}</span>
         </div>
 
         <div>
           <p>Monthly budget</p>
 
-          {#if monthlyBudget}
-            <span>${monthlyBudget}</span>
+          {#if monthlyBudget || monthlyBudget === 0}
+            <span>{getCurrency(userData?.currency)}</span>
+            <span contenteditable="true" on:input={(event) => handleUpdateUserMonthlyBudget({ userId: userData?.id, monthlyBudget: event.currentTarget.innerText })}>{truncate(monthlyBudget)}</span>
           {:else}
             <Loader size={28} />
           {/if}
@@ -150,6 +157,6 @@
   {/if}
 
   {#each expensesList as expense, index}
-    <ExpensesItem {...expense} expensesList={expensesList} index={index} />
+    <ExpensesItem {...expense} expensesList={expensesList} index={index} user={userData} />
   {/each}
 {/if}

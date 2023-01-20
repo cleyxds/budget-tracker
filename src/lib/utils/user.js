@@ -1,13 +1,15 @@
 import Cookies from "js-cookie"
 
-import { getDoc } from "firebase/firestore"
+import { getDoc, updateDoc } from "firebase/firestore"
 
 import { expenses } from "../../stores/expenses"
+import { user } from "../../stores/user"
 
 import { userDoc } from "../../services/firebase"
 import { handleGetUserExpenses } from "./expenses"
 
 import { ERRORS } from "../constants/errors"
+import { CURRENCIES } from "../constants/currencies"
 
 export async function getInitialUserData({ authenticationCallback }) {
   const JSESSIONID = Cookies.get("JSESSIONID")
@@ -37,3 +39,26 @@ export async function setUserExpenses({ userId }) {
 }
 
 async function handleNoCredentialsError({ error }) {}
+
+async function refetchUserData({ userId }) {
+  const data = await getDoc(userDoc(userId))
+  const userData = data?.data()
+
+  user.set(userData)
+}
+
+export async function handleUpdateUserMonthlyBudget({ userId, monthlyBudget }) {
+  try {
+    await updateDoc(userDoc(userId), {
+      monthlyBudget: Number(monthlyBudget),
+    })
+  } catch (error) {
+    console.warn(error)
+  } finally {
+    await refetchUserData({ userId })
+  }
+}
+
+export function getCurrency(currency) {
+  return CURRENCIES[currency]
+}

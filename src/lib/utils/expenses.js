@@ -17,6 +17,16 @@ import {
   expensesDoc,
 } from "../../services/firebase"
 
+export const EDIT_EXPENSE_TYPES = {
+  MAX_PRICE: "MAX_PRICE",
+  PRICE: "PRICE",
+}
+
+const EXPENSE_PRICE_FIELDS = {
+  MAX_PRICE: "maxPrice",
+  PRICE: "price",
+}
+
 import { setUserExpenses as refetchUserExpenses } from "./user"
 
 export async function handleAddExpenses({}) {
@@ -50,7 +60,34 @@ export async function handleAddExpense({ event, expensesId, userId, onEnd }) {
   }
 }
 
-export async function handleEditExpense({}) {}
+export async function handleEditExpense({
+  type = EDIT_EXPENSE_TYPES.MAX_PRICE,
+  userId,
+  value,
+  expenseId,
+}) {
+  try {
+    if (type === EDIT_EXPENSE_TYPES.MAX_PRICE) {
+      await updateDoc(expenseDoc(expenseId), {
+        [EXPENSE_PRICE_FIELDS.MAX_PRICE]: Number(value),
+      })
+
+      return
+    }
+
+    if (type === EDIT_EXPENSE_TYPES.PRICE) {
+      await updateDoc(expenseDoc(expenseId), {
+        [EXPENSE_PRICE_FIELDS.PRICE]: Number(value),
+      })
+
+      return
+    }
+  } catch (error) {
+    console.warn(error)
+  } finally {
+    await refetchUserExpenses({ userId })
+  }
+}
 
 export async function handleDeleteExpense({ expenseId, expensesId, userId }) {
   try {
@@ -82,7 +119,7 @@ export async function handleGetUserExpenses({ userId }) {
         ...properties,
         expenses: expensesAtItem,
         total: expensesAtItem
-          ?.map((item) => item?.maxPrice)
+          ?.map((item) => item?.price)
           ?.reduce((previous, current) => previous + current, 0),
       }
     })

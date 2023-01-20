@@ -64,6 +64,12 @@
     }
   })
 
+  user.subscribe((data) => {
+    if (!data?.username) return
+
+    document.title = `BTracker | ${data?.username}`
+  })
+
   onMount(async () => await bootstrap())
 
 </script>
