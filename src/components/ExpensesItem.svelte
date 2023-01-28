@@ -8,6 +8,7 @@
   import { EDIT_EXPENSE_TYPES, handleAddExpense, handleDeleteExpense,handleEditExpense } from "../lib/utils/expenses"
   import { truncate } from "../lib/utils/truncate"
   import { getCurrency } from "../lib/utils/user"
+  import { formatProgressValue } from "../lib/utils/progress"
 
   let isModalExpenseOpen = false;
 
@@ -21,10 +22,6 @@
   export let index
   
   $: userId = user?.id
-
-  function formatProgressValue(expense) {
-    return Math.round((((expense?.price * 100) / expense?.maxPrice) + Number.EPSILON) * 100) / 100
-  }
 
   function onFinishSubmitExpense() {
     isModalExpenseOpen = false

@@ -3,10 +3,10 @@
   import Screen from "../components/Screen.svelte"
   import NavBar from "../components/NavBar.svelte"
   import Landing from "../components/Landing.svelte"
-  import Expenses from "../components/Expenses.svelte"
+  import Expenses from "../components/Expenses/Expenses.svelte"
+  import Header from "../components/Header.svelte"
 
   import { authentication } from '../stores/authentication';
-  import Header from "../components/Header.svelte"
   
   let className
   
@@ -18,6 +18,7 @@
 
     className = "landingContainer"
 	})
+
 </script>
 
 <style>
@@ -33,7 +34,7 @@
 </style>
 
 <Screen>
-  <Header />
+  <Header middleComponent={{title: "Despesas"}} />
 
   <div class={className}>
     <Landing />

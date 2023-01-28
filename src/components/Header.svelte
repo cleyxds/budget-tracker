@@ -1,37 +1,76 @@
 <script>
 
-  import { goto } from "@roxi/routify"
+  import PlusIcon from "../assets/icons/PlusIcon.svelte"
 
-  import { handleLogout } from "../lib/utils/authentication"
+  export let actions = {}
 
-  import { authentication } from "../stores/authentication"
-  import { user, DEFAULT_USER } from "../stores/user"
+  export let middleComponent = { title: "Expenses" }
 
-  const logoutCallback = () => {
-    user.set(DEFAULT_USER)
-
-    $goto('/')
-  }
 
 </script>
 
 <style>
-  header {
-    padding: 24px 32px 0 32px;
+  .iconContainer {
+    display: inherit;
+    align-items: center;
+    padding: 10px;
 
+    cursor: pointer;
+  }
+
+  section {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
+    min-height: 48px;
+
+    margin: 1rem 2rem 0px 2rem;
+    padding: 0 20px;
+
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+
+    background-color: var(--light-background);
+    color: var(--black-II);
+  }
+
+  .leftContainer {
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+
+    color: var(--gray-I);
+  }
+
+  .middleContainer {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    padding: 0 8px;
+  }
+
+  .rightContainer {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
   }
 </style>
 
-<header>
-  <h1>Budgets</h1>
-  
-  {#if !$authentication.isAuthenticated}
-    <h1 on:keydown={() => {}} on:click={() => $goto("/login")}>Login</h1>
-  {/if}
+<section>
+  <div class="leftContainer">
+  </div>
 
-  {#if $authentication.isAuthenticated}
-    <h1 on:keydown={() => {}} on:click={() => handleLogout({ authentication, callback: logoutCallback })}>Log out</h1>
-  {/if}
-</header>
+  <div class="middleContainer">
+    {!!middleComponent?.title && middleComponent.title}
+  </div>
+
+  <div class="rightContainer">
+    <div on:keydown={() => {}} on:click={actions?.handleAddExpenses} class="iconContainer">
+      <PlusIcon />
+    </div>
+  </div>
+
+
+</section>

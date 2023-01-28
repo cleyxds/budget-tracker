@@ -13,6 +13,8 @@
   import { getInitialUserData } from "./lib/utils/user"
   import { expenses } from "./stores/expenses"
 
+  import "carbon-components-svelte/css/white.css"
+
   let loading = false
 
   function initialAuthenticationCallback({ userId, userData }) {

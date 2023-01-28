@@ -1,18 +1,17 @@
 <script>
 
-  import { authentication } from "../stores/authentication"
-  import { expenses } from "../stores/expenses"
-  import { user } from "../stores/user"
+  import { authentication } from "../../stores/authentication"
+  import { expenses } from "../../stores/expenses"
+  import { user } from "../../stores/user"
 
-  import MonthlyExpenses from "./MonthlyExpenses.svelte"
-  import Progress from "./Progress.svelte"
-  import ExpensesItem from "./ExpensesItem.svelte"
-  import Greeting from "./Greeting.svelte"
-  import Loader from "./Loader.svelte"
+  import MonthlyExpenses from "../MonthlyExpenses.svelte"
+  import Progress from "../Progress.svelte"
+  import ExpensesItem from "../ExpensesItem.svelte"
+  import Loader from "../Loader.svelte"
 
-  import { handleAddExpenses } from "../lib/utils/expenses"
-  import { getCurrency, handleUpdateUserMonthlyBudget } from "../lib/utils/user"
-  import { truncate } from "../lib/utils/truncate"
+  import { handleAddExpenses } from "../../lib/utils/expenses"
+  import { getCurrency, handleUpdateUserMonthlyBudget } from "../../lib/utils/user"
+  import { truncate } from "../../lib/utils/truncate"
 
   let monthlyBudget = null
   let spendThisMonth = null
@@ -121,8 +120,6 @@
 </style>
 
 {#if $authentication.isAuthenticated}
-  <Greeting user={userData} actions={greetingBarActions} />
-
   <div class="monthlyUserExpense">
     <MonthlyExpenses />
     

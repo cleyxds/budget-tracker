@@ -4,35 +4,60 @@
 
   import OverviewIcon from "../assets/icons/Overview.svelte"
   import CalendarIcon from "../assets/icons/Calendar.svelte"
-  import SettingsIcon from "../assets/icons/Settings.svelte"
+  
+  import Dashboard from "carbon-icons-svelte/lib/Dashboard.svelte"
+  import Settings from "carbon-icons-svelte/lib/Settings.svelte"
+  import Calendar from "carbon-icons-svelte/lib/Calendar.svelte"
 
   import { authentication } from "../stores/authentication"
+  import { month } from "../stores/month"
 
   let route = window.location.pathname
 
   const NOT_AUTHENTICATED_ROUTES = [
     {
-      name: "Expenses",
+      name: "Visão geral",
       route: "/",
       icon: "OverviewIcon"
     },
     {
-      name: "Overview",
+      name: "Contas",
       route: "/overview",
       icon: "CalendarIcon"
     },
+    {
+      name: "Login",
+      route: "/login",
+      icon: "CalendarIcon"
+    },
+  ]
+
+  let currentMonth = $month
+  month.subscribe(_currentMonth => currentMonth = _currentMonth)
+
+  const AUTHENTICATED_ROUTES = [
+    {
+      name: "Visão geral",
+      route: "/",
+      icon: "DashboardIcon"
+    },
+    {
+      name: "Esse mês",
+      route: `/month/${currentMonth}`,
+      icon: "CalendarIcon"
+    },
+    {
+      name: "Configurações",
+      route: "/settings",
+      icon: "SettingsIcon"
+    }
   ]
 
   let availableTabs = NOT_AUTHENTICATED_ROUTES
 
   authentication.subscribe(({isAuthenticated}) => {
 		if (isAuthenticated) {
-      availableTabs = [...availableTabs, {
-        name: "Credit score",
-        route: "/profile",
-        icon: "SettingsIcon"
-      }]
-
+      availableTabs = AUTHENTICATED_ROUTES
       return
     }
 
@@ -78,11 +103,6 @@
 
     color: var(--black-I)
   }
-
-  .navBarContainer a svg {
-    margin-bottom: 8px;
-  }
-  
 </style>
 
 <footer class="navBarContainer">
@@ -93,13 +113,20 @@
       {/if}
 
       {#if tab.icon === "CalendarIcon"}
-        <CalendarIcon selected={tab?.route === route} />
+        <Calendar size={24} />
       {/if}
 
       {#if tab.icon === "SettingsIcon"}
-        <SettingsIcon selected={tab?.route === route} />
+        <Settings size={24} />
       {/if}
-      {tab?.name}
+
+      {#if tab.icon === "DashboardIcon"}
+        <Dashboard size={24} />
+      {/if}
+
+      <p>
+        {tab?.name}
+      </p>
     </a>
   {/each}
 </footer>
