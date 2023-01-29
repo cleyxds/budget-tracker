@@ -1,8 +1,12 @@
 <script>
-
   import { authentication } from "../stores/authentication"
-
 </script>
+
+{#if !$authentication.isAuthenticated}
+  <div>
+    <h1>Never struggle on your finances again</h1>
+  </div>
+{/if}
 
 <style>
   div {
@@ -16,11 +20,3 @@
     line-height: 58px;
   }
 </style>
-
-{#if !$authentication.isAuthenticated}
-  <div>
-    <h1>
-      Never struggle on your finances again
-    </h1>
-  </div>
-{/if}

@@ -1,20 +1,12 @@
 <script>
   import { Dialog } from "@rgossiaux/svelte-headlessui"
 
-  import Progress from "./Progress.svelte"
-  import PlusIcon from "../assets/icons/PlusIcon.svelte"
+  import AddAlt from "carbon-icons-svelte/lib/AddAlt.svelte"
+  import Expense from "./Expenses/components/Expense.svelte"
 
-  import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte"
-
-  import {
-    EDIT_EXPENSE_TYPES,
-    handleAddExpense,
-    handleDeleteExpense,
-    handleEditExpense,
-  } from "../lib/utils/expenses"
+  import { handleAddExpense } from "../lib/utils/expenses"
   import { truncate } from "../lib/utils/truncate"
   import { getCurrency } from "../lib/utils/user"
-  import { formatProgressValue } from "../lib/utils/progress"
 
   let isModalExpenseOpen = false
 
@@ -23,11 +15,11 @@
   export let color
   export let expenses
   export let id
-  export let user
+  export let userData
   export let expensesList
   export let index
 
-  $: userId = user?.id
+  $: userId = userData?.id
 
   function onFinishSubmitExpense() {
     isModalExpenseOpen = false
@@ -47,7 +39,7 @@
           on:click={() => (isModalExpenseOpen = true)}
           class="iconContainer"
         >
-          <PlusIcon />
+          <AddAlt />
         </div>
 
         <Dialog
@@ -83,76 +75,12 @@
         </Dialog>
       </div>
 
-      <span>{getCurrency(user?.currency)}{truncate(Number(total))}</span>
+      <span>{getCurrency(userData?.currency)}{truncate(Number(total))}</span>
     </article>
   </div>
 
   {#each expenses as expense}
-    <section class="expense">
-      <div>
-        <p>{expense?.name}</p>
-
-        <div>
-          <span>Spent</span>
-
-          <p>{getCurrency(user?.currency)}</p>
-          <p
-            contenteditable="true"
-            on:input={(event) =>
-              handleEditExpense({
-                type: EDIT_EXPENSE_TYPES.PRICE,
-                value: event.currentTarget.innerText,
-                expenseId: expense?.id,
-                userId,
-              })}
-          >
-            {truncate(expense?.price)}
-          </p>
-        </div>
-
-        <div>
-          <span>Cost</span>
-
-          <p>{getCurrency(user?.currency)}</p>
-          <p
-            contenteditable="true"
-            on:input={(event) =>
-              handleEditExpense({
-                type: EDIT_EXPENSE_TYPES.MAX_PRICE,
-                value: event.currentTarget.innerText,
-                expenseId: expense?.id,
-                userId,
-              })}
-          >
-            {truncate(expense?.maxPrice)}
-          </p>
-        </div>
-      </div>
-
-      <svg
-        on:keydown={() => {}}
-        on:click={() =>
-          handleDeleteExpense({
-            expenseId: expense?.id,
-            expensesId: expensesList?.[index]?.id,
-            userId,
-          })}
-      >
-        <TrashCan />
-      </svg>
-
-      <div>
-        <div style:margin-right="27.82px" style:flex={1}>
-          <Progress {color} progress={formatProgressValue(expense)} />
-        </div>
-
-        <h3>
-          Left {getCurrency(user?.currency)}{truncate(
-            expense?.maxPrice - expense?.price
-          )}
-        </h3>
-      </div>
-    </section>
+    <Expense {color} {expense} {expensesList} {index} {userData} />
   {/each}
 </div>
 
