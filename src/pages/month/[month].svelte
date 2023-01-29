@@ -1,15 +1,13 @@
 <script>
-
   import Header from "../../components/Header.svelte"
   import NavBar from "../../components/NavBar.svelte"
   import Screen from "../../components/Screen.svelte"
 
-  import { params } from '@roxi/routify'
-
+  import { month } from "../../stores/month"
 </script>
 
 <Screen>
-  <Header middleComponent={{ title: $params?.month }}  />
+  <Header middleComponent={{ title: $month }} />
 </Screen>
 
 <NavBar />

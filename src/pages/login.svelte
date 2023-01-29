@@ -1,6 +1,8 @@
 <script>
 
+  import Screen from "../components/Screen.svelte"
   import Header from "../components/Header.svelte"
+  import NavBar from "../components/NavBar.svelte"
 
   import { goto } from "@roxi/routify"
   
@@ -104,17 +106,21 @@
   }
 </style>
 
-<Header />
+<Screen>
+  <Header />
 
-<div>
-  <button on:click={() => handleLogin({ event: "google" })}>Continue com Google</button>
+  <div>
+    <button on:click={() => handleLogin({ event: "google" })}>Continue com Google</button>
+  
+    <p>ou</p>
+  
+    <form on:submit|preventDefault={(event) => handleLogin({ event, authentication, callback })}>
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" placeholder="Password" required />
+  
+      <button type="submit">Log in</button>
+    </form>
+  </div>
+</Screen>
 
-  <p>ou</p>
-
-  <form on:submit|preventDefault={(event) => handleLogin({ event, authentication, callback })}>
-    <input type="email" name="email" placeholder="Email" required />
-    <input type="password" name="password" placeholder="Password" required />
-
-    <button type="submit">Log in</button>
-  </form>
-</div>
+<NavBar />

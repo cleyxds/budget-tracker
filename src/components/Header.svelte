@@ -1,13 +1,37 @@
 <script>
-
+  import Logo from "../assets/icons/Logo.svelte"
   import PlusIcon from "../assets/icons/PlusIcon.svelte"
 
-  export let actions = {}
-
-  export let middleComponent = { title: "Expenses" }
-
-
+  export let leftComponent = { type: "" }
+  export let middleComponent = { title: "" }
+  export let rightComponent = { type: "", actions: [] }
 </script>
+
+<section>
+  <div class="leftContainer">
+    {#if leftComponent?.type === "logo"}
+      <Logo />
+    {/if}
+  </div>
+
+  <div class="middleContainer">
+    {#if !!middleComponent?.title}
+      {middleComponent.title}
+    {/if}
+  </div>
+
+  <div class="rightContainer">
+    {#if rightComponent?.type === "add"}
+      <div
+        on:keydown={() => {}}
+        on:click={rightComponent?.actions?.[0]}
+        class="iconContainer"
+      >
+        <PlusIcon />
+      </div>
+    {/if}
+  </div>
+</section>
 
 <style>
   .iconContainer {
@@ -27,7 +51,7 @@
     margin: 1rem 2rem 0px 2rem;
     padding: 0 20px;
 
-    font-family: 'DM Sans', sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-weight: 700;
     font-size: 18px;
     line-height: 28px;
@@ -49,6 +73,7 @@
     justify-content: center;
     flex: 1;
     padding: 0 8px;
+    text-align: center;
   }
 
   .rightContainer {
@@ -57,20 +82,3 @@
     flex: 1;
   }
 </style>
-
-<section>
-  <div class="leftContainer">
-  </div>
-
-  <div class="middleContainer">
-    {!!middleComponent?.title && middleComponent.title}
-  </div>
-
-  <div class="rightContainer">
-    <div on:keydown={() => {}} on:click={actions?.handleAddExpenses} class="iconContainer">
-      <PlusIcon />
-    </div>
-  </div>
-
-
-</section>
