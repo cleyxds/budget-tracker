@@ -47,6 +47,14 @@
         <option value="en-US">Inglês</option>
       </select>
     </li>
+
+    <li>
+      <p>Tema</p>
+      <select name="Tema">
+        <option value="light" selected>Claro</option>
+        <option value="dark">Escuro</option>
+      </select>
+    </li>
   </ul>
 </Screen>
 
