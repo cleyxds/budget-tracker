@@ -4,7 +4,19 @@
   import Header from "../components/Header.svelte"
   import Loader from "../components/Loader.svelte"
 
+  import { handleLogout } from "../lib/utils/authentication"
+  import { goto } from "@roxi/routify"
+
   let goalsEnabled = true
+
+  import { authentication } from "../stores/authentication"
+  import { user, DEFAULT_USER } from "../stores/user"
+
+  const logoutCallback = () => {
+    user.set(DEFAULT_USER)
+
+    $goto("/")
+  }
 </script>
 
 <Screen>
@@ -14,7 +26,13 @@
   />
 
   <ul>
-    <li>Sair</li>
+    <li
+      on:keydown={() => {}}
+      on:click={() =>
+        handleLogout({ authentication, callback: logoutCallback })}
+    >
+      Sair
+    </li>
 
     <li>
       <p>Habilitar metas</p>
@@ -36,13 +54,19 @@
 
 <style>
   ul {
+    display: flex;
+    flex-direction: column;
+
     padding: 0 2rem;
   }
 
   ul li {
     display: flex;
+    align-self: flex-start;
 
     margin-top: 0.5rem;
+
+    cursor: pointer;
   }
 
   ul li:nth-child(1) {

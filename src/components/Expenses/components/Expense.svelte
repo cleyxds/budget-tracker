@@ -9,6 +9,7 @@
   import { truncate } from "../../../lib/utils/truncate"
 
   import { getCurrency } from "../../../lib/utils/user"
+
   import Progress from "../../Progress.svelte"
 
   export let expense
@@ -39,11 +40,10 @@
       </div>
     </div>
 
-    <div class="component">
+    <div class="component spendings items-end">
       <div class="component">
-        <span>Spent</span>
+        <p>Gasto {getCurrency(userData?.currency)}</p>
 
-        <p>{getCurrency(userData?.currency)}</p>
         <p
           contenteditable="true"
           on:input={(event) =>
@@ -58,10 +58,8 @@
         </p>
       </div>
 
-      <div class="component iconContainer">
-        <span>Cost</span>
-
-        <p>{getCurrency(userData?.currency)}</p>
+      <div class="component iconContainer commonMarginI">
+        <p>Custo {getCurrency(userData?.currency)}</p>
         <p
           contenteditable="true"
           on:input={(event) =>
@@ -78,7 +76,7 @@
     </div>
   </div>
 
-  <div class="bottomContainer">
+  <div class="bottomContainer commonMarginII">
     <div style:margin-right="27.82px" style:flex={1}>
       <Progress {color} progress={formatProgressValue(expense)} />
     </div>
@@ -93,12 +91,20 @@
 
 <style>
   .container {
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
+    border-bottom: 1px solid var(--white-II);
+    padding-bottom: 1rem;
+  }
+
+  .container:last-child {
+    border-bottom: 0px solid var(--white-II);
+    padding-bottom: 0;
   }
 
   .topContainer {
     display: flex;
     align-items: center;
+    padding: 0 20px;
   }
   .iconContainer {
     margin-left: 0.5rem;
@@ -115,8 +121,25 @@
     align-items: center;
   }
 
+  .items-end {
+    align-items: flex-end;
+  }
+
+  .spendings {
+    flex-direction: column;
+  }
+
+  .commonMarginI {
+    margin-top: 0.25rem;
+  }
+
+  .commonMarginII {
+    margin-top: 1rem;
+  }
+
   .bottomContainer {
     display: flex;
     align-items: center;
+    padding: 0 20px;
   }
 </style>

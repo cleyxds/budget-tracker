@@ -3,7 +3,6 @@
   import NavBar from "../components/NavBar.svelte"
   import Landing from "../components/Landing.svelte"
   import Expenses from "../components/Expenses/Expenses.svelte"
-  import Header from "../components/Header.svelte"
 
   import { authentication } from "../stores/authentication"
 
@@ -20,8 +19,6 @@
 </script>
 
 <Screen>
-  <Header middleComponent={{ title: "Despesas" }} />
-
   <div class={className}>
     <Landing />
 

@@ -4,6 +4,7 @@
   import { user } from "../../stores/user"
 
   import ExpensesItem from "../ExpensesItem.svelte"
+  import Header from "../Header.svelte"
   import MonthExpendings from "./components/MonthExpendings.svelte"
   import MonthMoneySpent from "./components/MonthMoneySpent.svelte"
 
@@ -36,6 +37,8 @@
 </script>
 
 {#if $authentication.isAuthenticated}
+  <Header middleComponent={{ title: "Despesas" }} />
+
   <MonthMoneySpent {monthlyBudget} {spendThisMonth} {userData} />
 
   <MonthExpendings

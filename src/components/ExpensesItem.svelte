@@ -27,7 +27,7 @@
 </script>
 
 <div class="expenseItem">
-  <div>
+  <div class="expenseTitle">
     <svg style:background-color={color} />
 
     <article>
@@ -94,7 +94,7 @@
   }
 
   .expenseItem {
-    padding: 20px 20px 24px;
+    padding: 20px 0px 24px;
 
     box-shadow: 0px 25px 40px -10px rgba(0, 0, 0, 0.06);
 
@@ -102,14 +102,17 @@
 
     border: 1px solid var(--white-II);
     border-radius: 18px;
+    overflow: hidden;
 
     margin: 0px 16px 20px;
   }
 
-  .expenseItem div {
+  .expenseTitle {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    padding: 0 20px;
   }
 
   .expenseItem div svg {
@@ -135,6 +138,7 @@
 
   .expenseItem div article div {
     display: flex;
+    align-items: center;
   }
 
   .expenseItem div article p {
@@ -144,7 +148,6 @@
     margin-right: 0.5rem;
 
     font-size: 17.12px;
-    line-height: 29.96px;
 
     color: var(--black-II);
   }
@@ -154,7 +157,6 @@
     font-weight: 400;
 
     font-size: 17.12px;
-    line-height: 29.96px;
 
     color: var(--gray-II);
   }
