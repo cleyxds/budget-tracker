@@ -7,7 +7,7 @@
   export let rightComponent = { type: "", actions: [] }
 </script>
 
-<section>
+<header>
   <div class="leftContainer">
     {#if leftComponent?.type === "logo"}
       <Logo />
@@ -31,7 +31,7 @@
       </div>
     {/if}
   </div>
-</section>
+</header>
 
 <style>
   .iconContainer {
@@ -42,7 +42,7 @@
     cursor: pointer;
   }
 
-  section {
+  header {
     display: flex;
     justify-content: center;
     align-items: center;
