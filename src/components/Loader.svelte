@@ -1,34 +1,37 @@
 <script>
-
-  const DEFAULT_SIZE = 48
+  const DEFAULT_SIZE = 24
 
   export let size = DEFAULT_SIZE
-  let spinnerSize = DEFAULT_SIZE * 0.8333333
-
 </script>
+
+<span
+  class="loader sizeAdjust"
+  style:width={`${size}px`}
+  style:height={`${size}px`}
+/>
 
 <style>
   .loader {
     width: 23.34px;
     height: 23.34px;
     border: 3px solid var(--dark-background);
-    border-radius: 50%;
+    border-radius: 9999px;
     display: inline-block;
     position: relative;
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
   }
   .loader::after {
-    content: '';  
+    content: "";
     box-sizing: border-box;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 19.45px;
-    height: 19.45px;
-    border-radius: 50%;
-    border: 3px solid;
+    width: 105%;
+    height: 100%;
+    border-radius: 9999px;
+    border: 2px solid;
     border-color: var(--expense-primary) transparent;
   }
 
@@ -41,5 +44,3 @@
     }
   }
 </style>
-
-<span class="loader"></span>

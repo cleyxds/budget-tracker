@@ -1,10 +1,14 @@
 <script>
-
-  import Screen from '../components/Screen.svelte'
+  import Screen from "../components/Screen.svelte"
   import NavBar from "../components/NavBar.svelte"
-  import Header from '../components/Header.svelte'
-
+  import Header from "../components/Header.svelte"
 </script>
+
+<Screen>
+  <Header middleComponent={{ title: "Gráficos" }} />
+</Screen>
+
+<NavBar />
 
 <style>
   h1 {
@@ -15,10 +19,3 @@
     font-family: "DM Sans", sans-serif;
   }
 </style>
-
-<Screen>
-  <Header />
-  <h1>Overview page</h1>
-</Screen>
-
-<NavBar />

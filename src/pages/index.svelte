@@ -1,24 +1,32 @@
 <script>
-
   import Screen from "../components/Screen.svelte"
   import NavBar from "../components/NavBar.svelte"
   import Landing from "../components/Landing.svelte"
-  import Expenses from "../components/Expenses.svelte"
+  import Expenses from "../components/Expenses/Expenses.svelte"
 
-  import { authentication } from '../stores/authentication';
-  import Header from "../components/Header.svelte"
-  
+  import { authentication } from "../stores/authentication"
+
   let className
-  
-  authentication.subscribe(({isAuthenticated}) => {
-		if (!isAuthenticated) {
+
+  authentication.subscribe(({ isAuthenticated }) => {
+    if (!isAuthenticated) {
       className = "landingContainer unautheneticatedContainer"
       return
     }
 
     className = "landingContainer"
-	})
+  })
 </script>
+
+<Screen>
+  <div class={className}>
+    <Landing />
+
+    <Expenses />
+  </div>
+</Screen>
+
+<NavBar />
 
 <style>
   .landingContainer {
@@ -29,17 +37,4 @@
   .unautheneticatedContainer {
     padding: 0 36px;
   }
-  
 </style>
-
-<Screen>
-  <Header />
-
-  <div class={className}>
-    <Landing />
-  
-    <Expenses />
-  </div>
-</Screen>
-
-<NavBar />
