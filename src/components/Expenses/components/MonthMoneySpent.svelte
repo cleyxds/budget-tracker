@@ -34,7 +34,7 @@
 
     color: var(--black-I);
 
-    z-index: 9999;
+    z-index: 9998;
   }
 
   .monthlyUserExpense section p {

@@ -1,6 +1,15 @@
 <script>
   import Logo from "../assets/icons/Logo.svelte"
-  import PlusIcon from "../assets/icons/PlusIcon.svelte"
+
+  import {
+    Popover,
+    PopoverButton,
+    PopoverPanel,
+  } from "@rgossiaux/svelte-headlessui"
+
+  import AddFilled from "carbon-icons-svelte/lib/AddFilled.svelte"
+
+  import CreateExpense from "./Expenses/components/CreateExpense.svelte"
 
   export let leftComponent = { type: "" }
   export let middleComponent = { title: "" }
@@ -22,22 +31,37 @@
 
   <div class="rightContainer">
     {#if rightComponent?.type === "add"}
-      <div
-        on:keydown={() => {}}
-        on:click={rightComponent?.actions?.[0]}
-        class="iconContainer"
+      <Popover
+        style="position: relative;display: flex;justify-content: flex-end;"
       >
-        <PlusIcon />
-      </div>
+        <PopoverButton as="div">
+          <div
+            on:keydown={() => {}}
+            on:click={rightComponent?.actions?.[0]}
+            class="iconContainer"
+          >
+            <AddFilled />
+          </div>
+        </PopoverButton>
+
+        <PopoverPanel
+          let:close
+          style="position: absolute; z-index: 9999; margin-top: 3rem;"
+        >
+          <CreateExpense {close} />
+        </PopoverPanel>
+      </Popover>
     {/if}
   </div>
 </header>
 
 <style>
   .iconContainer {
-    display: inherit;
+    display: flex;
     align-items: center;
-    padding: 10px;
+
+    padding: 0.8rem;
+    margin-right: -0.8rem;
 
     cursor: pointer;
   }

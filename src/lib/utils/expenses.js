@@ -17,6 +17,10 @@ import {
   expensesDoc,
 } from "../../services/firebase"
 
+import { AVAILABLE_COLORS } from "../constants/availableColors"
+import { getCurrentMonth } from "./getCurrentMonth"
+import { shuffle } from "./shuffle"
+
 export const EDIT_EXPENSE_TYPES = {
   MAX_PRICE: "MAX_PRICE",
   PRICE: "PRICE",
@@ -29,8 +33,33 @@ const EXPENSE_PRICE_FIELDS = {
 
 import { setUserExpenses as refetchUserExpenses } from "./user"
 
-export async function handleAddExpenses({}) {
-  alert("Pelé é o melhor!")
+export async function handleAddExpenses({ event, userId, onEnd }) {
+  const formData = new FormData(event?.target)
+
+  const formdata = {}
+  for (let field of formData) {
+    const [key, value] = field
+    formdata[key] = value
+  }
+
+  const newExpenseData = {
+    color: shuffle(AVAILABLE_COLORS),
+    expenseId: [],
+    title: formdata?.expenseTitle,
+    userId,
+    date: getCurrentMonth(),
+  }
+
+  try {
+    await addDoc(expensesCollection, newExpenseData)
+  } catch (error) {
+  } finally {
+    if (userId) {
+      await refetchUserExpenses?.({ userId })
+    }
+
+    await onEnd?.()
+  }
 }
 
 export async function handleAddExpense({ event, expensesId, userId, onEnd }) {

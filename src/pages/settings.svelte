@@ -3,14 +3,27 @@
   import NavBar from "../components/NavBar.svelte"
   import Header from "../components/Header.svelte"
   import Loader from "../components/Loader.svelte"
+  import Switch from "../components/Switch.svelte"
 
   import { handleLogout } from "../lib/utils/authentication"
   import { goto } from "@roxi/routify"
 
-  let goalsEnabled = true
+  let goalsEnabled = false
+
+  let isUpdatingGoals = false
+
+  async function toggleGoalsFunctionality() {
+    isUpdatingGoals = true
+
+    await wait({ ms: 2000, random: true })
+
+    isUpdatingGoals = false
+  }
 
   import { authentication } from "../stores/authentication"
   import { user, DEFAULT_USER } from "../stores/user"
+
+  import wait from "../lib/utils/wait"
 
   const logoutCallback = () => {
     user.set(DEFAULT_USER)
@@ -35,9 +48,19 @@
     </li>
 
     <li>
-      <p>Habilitar metas</p>
-      <input type="checkbox" bind:checked={goalsEnabled} name="" id="" />
-      <Loader size={18} />
+      <p class="commonMargin">Habilitar metas</p>
+
+      <div
+        on:keydown={() => {}}
+        on:click={toggleGoalsFunctionality}
+        class="commonMargin"
+      >
+        <Switch enabled={goalsEnabled} />
+      </div>
+
+      {#if isUpdatingGoals}
+        <Loader size={18} />
+      {/if}
     </li>
 
     <li>
@@ -83,5 +106,9 @@
 
   ul li:nth-child(2) {
     align-items: center;
+  }
+
+  .commonMargin {
+    margin-right: 0.5rem;
   }
 </style>
