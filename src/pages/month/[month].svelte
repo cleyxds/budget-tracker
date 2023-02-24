@@ -7,7 +7,7 @@
 </script>
 
 <Screen>
-  <Header middleComponent={{ title: $month }} />
+  <Header middleComponent={{ title: $month.textDate }} />
 </Screen>
 
 <NavBar />

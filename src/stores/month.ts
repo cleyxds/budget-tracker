@@ -1,10 +1,15 @@
 import { writable } from "svelte/store"
 
 import { MONTHS } from "../constants"
+import { formatDecimal, getMonthDate } from "../lib/utils/expenses"
 
-const now = new Date()
-const monthIndex = now?.getUTCMonth()
-const currentMonth = MONTHS[monthIndex]
-const year = now?.getUTCFullYear()
+const date = getMonthDate()
 
-export const month = writable(`${currentMonth} ${year}`)
+const [monthIndex, year] = date?.split("/")
+
+const currentMonth = MONTHS[Number(monthIndex) - 1]
+
+export const month = writable({
+  textDate: `${currentMonth} ${year}`,
+  date: `${formatDecimal(Number(monthIndex))}/${year}`,
+})

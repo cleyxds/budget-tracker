@@ -2,6 +2,7 @@
   import { handleAddExpenses } from "../../../lib/utils/expenses"
 
   import { user } from "../../../stores/user"
+  import { month } from "../../../stores/month"
 
   export let close
 
@@ -17,6 +18,7 @@
         event,
         userId: $user.id,
         onEnd: onEndCreateExpenses,
+        date: $month.date,
       })}
   >
     <label class="commonMargin" for="expenseTitle">

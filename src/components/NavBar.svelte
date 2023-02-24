@@ -32,9 +32,9 @@
     },
   ]
 
-  let currentMonth = $month
+  let currentMonth = $month.date
   month.subscribe((currMonth) => {
-    currentMonth = currMonth
+    currentMonth = currMonth.date
   })
 
   const AUTHENTICATED_ROUTES = [
@@ -45,7 +45,7 @@
     },
     {
       name: "Esse mês",
-      route: `/month/${currentMonth?.replace(/ /g, "")}`,
+      route: `/month/${currentMonth?.replace("/", "-")}`,
       icon: "CalendarIcon",
     },
     {

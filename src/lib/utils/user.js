@@ -32,8 +32,8 @@ export async function getInitialUserData({ authenticationCallback }) {
   }
 }
 
-export async function setUserExpenses({ userId }) {
-  const userExpenses = await handleGetUserExpenses({ userId })
+export async function setUserExpenses({ userId, date }) {
+  const userExpenses = await handleGetUserExpenses({ userId, date })
 
   expenses.set(userExpenses)
 }

@@ -7,6 +7,7 @@
   } from "@rgossiaux/svelte-headlessui"
 
   import { month as currentMonth } from "../../../stores/month"
+  import { user } from "../../../stores/user"
 
   import { getExpensesByMonth } from "../../../lib/utils/expenses"
 
@@ -14,21 +15,39 @@
     currentMonth.set(month)
   }
 
-  currentMonth.subscribe(async (month) => {
-    await getExpensesByMonth({ month })
-  })
+  async function handleExpensesByMonth(date) {
+    await getExpensesByMonth({ userId: $user?.id, date })
+  }
+
+  currentMonth.subscribe(handleExpensesByMonth)
 
   let availableMonths = [
-    "October 2022",
-    "November 2022",
-    "December 2022",
-    "January 2023",
+    {
+      textDate: "Outubro 2022",
+      date: "10/2022",
+    },
+    {
+      textDate: "Novembro 2022",
+      date: "11/2022",
+    },
+    {
+      textDate: "Dezembro 2022",
+      date: "12/2022",
+    },
+    {
+      textDate: "Janeiro 2023",
+      date: "01/2023",
+    },
+    {
+      textDate: "Fevereiro 2023",
+      date: "02/2023",
+    },
   ]
 </script>
 
 <Menu as="div" class="wrapper">
   <MenuButton let:open class="theText monthlyExpensesContainer" as="h1"
-    >{$currentMonth}</MenuButton
+    >{$currentMonth.textDate}</MenuButton
   >
 
   <MenuItems class="monthlyExpensesPopover">
@@ -39,7 +58,7 @@
           on:click={() => handleSelectMonth({ month })}
           style="margin-top: 1rem;"
         >
-          {month}
+          {month?.textDate}
         </p>
       </MenuItem>
     {/each}

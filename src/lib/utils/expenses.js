@@ -18,7 +18,6 @@ import {
 } from "../../services/firebase"
 
 import { AVAILABLE_COLORS } from "../constants/availableColors"
-import { getCurrentMonth } from "./getCurrentMonth"
 import { shuffle } from "./shuffle"
 
 export const EDIT_EXPENSE_TYPES = {
@@ -31,9 +30,9 @@ const EXPENSE_PRICE_FIELDS = {
   PRICE: "price",
 }
 
-import { setUserExpenses as refetchUserExpenses } from "./user"
+import { setUserExpenses as refetchUserExpenses, setUserExpenses } from "./user"
 
-export async function handleAddExpenses({ event, userId, onEnd }) {
+export async function handleAddExpenses({ event, userId, date, onEnd }) {
   const formData = new FormData(event?.target)
 
   const formdata = {}
@@ -47,7 +46,7 @@ export async function handleAddExpenses({ event, userId, onEnd }) {
     expenseId: [],
     title: formdata?.expenseTitle,
     userId,
-    date: getCurrentMonth(),
+    date,
   }
 
   try {
@@ -132,9 +131,15 @@ export async function handleDeleteExpense({ expenseId, expensesId, userId }) {
   }
 }
 
-export async function handleGetUserExpenses({ userId }) {
+export async function handleGetUserExpenses({ userId, date: monthDate }) {
+  let date = getMonthDate()
+
+  if (monthDate) {
+    date = monthDate
+  }
+
   try {
-    const expenses = await getExpenses({ userId })
+    const expenses = await getExpenses({ userId, date })
     const arrayExpenseId = expenses?.map((item) => item?.expenseId)
 
     const expense = await getAllExpense({ expensesId: arrayExpenseId })
@@ -161,16 +166,22 @@ export async function handleGetUserExpenses({ userId }) {
   }
 }
 
-export async function getExpensesByMonth({ month }) {
-  return console.log(`getting expenses for ${month}`)
+export async function getExpensesByMonth({ userId, date }) {
+  await setUserExpenses({ userId, date: date?.date })
 }
 
-async function getExpenses({ userId }) {
+async function getExpenses({ userId, byMonth = true, date }) {
+  const filteredQuery = !byMonth
+    ? query(expensesCollection, where("userId", "==", userId))
+    : query(
+        expensesCollection,
+        where("userId", "==", userId),
+        where("date", "==", date)
+      )
+
   try {
-    const queryExpenses = query(
-      expensesCollection,
-      where("userId", "==", userId)
-    )
+    const queryExpenses = filteredQuery
+
     const querySnapshotExpenses = await getDocs(queryExpenses)
 
     const expenses = querySnapshotExpenses.docs.map((expense) => ({
@@ -216,4 +227,20 @@ async function updateExpensesById({ expensesId, expenseId }) {
   await updateDoc(expensesDoc(expensesId), {
     expenseId: arrayUnion(expenseId),
   })
+}
+
+export function getMonthDate() {
+  const now = new Date()
+
+  const month = now.getMonth()
+  const year = now.getFullYear()
+
+  const date = new Date(new Date().setUTCFullYear(year, month))
+
+  return `${formatDecimal(date.getMonth() + 1)}/${date.getFullYear()}`
+}
+
+export const formatDecimal = (value) => {
+  if (value <= 9) return `0${value}`
+  return value
 }
