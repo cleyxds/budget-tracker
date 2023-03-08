@@ -1,7 +1,7 @@
 <script>
   import Screen from "../components/Screen.svelte"
   import NavBar from "../components/NavBar.svelte"
-  import Landing from "../components/Landing.svelte"
+  import Landing from "../components/Landing/Landing.svelte"
   import Expenses from "../components/Expenses/Expenses.svelte"
 
   import { authentication } from "../stores/authentication"
