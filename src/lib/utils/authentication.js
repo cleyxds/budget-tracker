@@ -10,7 +10,7 @@ import Cookies from "js-cookie"
 import { setDoc } from "firebase/firestore"
 import wait from "./wait"
 
-const LOGIN_THIRD_PARTY = {
+export const LOGIN_THIRD_PARTY = {
   GOOGLE: "google",
 }
 
@@ -35,7 +35,7 @@ export async function handleLogin({ event, authentication, callback }) {
 
     await proceedAppAuthentication({ formdata, authentication, callback })
   } catch (error) {
-    console.warn("error when logging the user", error)
+    throw new Error(error)
   }
 }
 
@@ -71,7 +71,15 @@ export async function handleRegister({ event, authentication, callback }) {
 
     await proceedAppAuthentication({ authentication, formdata, callback })
   } catch (error) {
-    console.warn("error from creating user", error)
+    if (error.message?.includes("auth/email-already-in-use")) {
+      return {
+        errors: {
+          email: "Email já cadastrado",
+        },
+      }
+    }
+
+    console.warn(error)
   }
 }
 

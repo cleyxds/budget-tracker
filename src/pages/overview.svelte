@@ -9,13 +9,3 @@
 </Screen>
 
 <NavBar />
-
-<style>
-  h1 {
-    margin-top: 1rem;
-
-    padding: 0 2rem;
-
-    font-family: "DM Sans", sans-serif;
-  }
-</style>

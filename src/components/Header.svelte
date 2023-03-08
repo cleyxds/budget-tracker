@@ -72,7 +72,7 @@
     align-items: center;
     min-height: 48px;
 
-    margin: 1rem 2rem 0px 2rem;
+    margin: 0 2rem 0 2rem;
     padding: 0 20px;
 
     font-family: "DM Sans", sans-serif;
