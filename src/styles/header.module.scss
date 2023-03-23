@@ -1,7 +1,31 @@
 .headerContainer {
   display: flex;
   align-items: center;
-  min-height: 3rem;
-  padding: 1rem 2rem;
+  min-height: 5rem;
+  padding: 0 1.875rem;
   background-color: var(--transparent);
+
+  > div {
+    display: flex;
+    flex: 1;
+  }
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+
+  .connectButton {
+    background-color: var(--red-I);
+    min-height: 1.875rem;
+    padding: 0 1.6875rem;
+    border-radius: 9999px;
+    min-width: 9.8125rem;
+
+    font-family: "DM Sans";
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.1394rem;
+    color: var(--white-I);
+  }
 }

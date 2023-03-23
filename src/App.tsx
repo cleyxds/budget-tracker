@@ -1,9 +1,5 @@
-import { Header } from "./components/Header"
+import { Landing } from "./components/Landing"
 
 export function App() {
-  return (
-    <Header>
-      <div>App</div>
-    </Header>
-  )
+  return <Landing />
 }
