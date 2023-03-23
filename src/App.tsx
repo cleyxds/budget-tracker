@@ -1,3 +1,9 @@
+import { Header } from "./components/Header"
+
 export function App() {
-  return <div>App</div>
+  return (
+    <Header>
+      <div>App</div>
+    </Header>
+  )
 }
