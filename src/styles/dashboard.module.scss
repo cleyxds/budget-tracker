@@ -1,3 +1,76 @@
 .container {
   display: flex;
+  padding: 0 1.875rem;
+}
+
+@mixin textRegular {
+  font-family: "DM Sans";
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.465rem;
+}
+
+.search {
+  display: flex;
+  margin-top: 3.125rem;
+
+  > input {
+    @include textRegular;
+    border-top: 1px solid #eeeeee;
+    border-right: 0;
+    border-bottom: 1px solid #eeeeee;
+    border-left: 1px solid #eeeeee;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+    padding: 1rem 1.6875rem;
+    background-color: var(--dark-I);
+    color: var(--white-I);
+  }
+
+  .searchButton {
+    padding: 0.75rem 1.5625rem;
+    background-color: var(--red-I);
+    margin-left: -0.3rem;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+  }
+}
+
+.explore {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 26rem;
+  background-color: var(--dark-III);
+
+  > h1 {
+    @include textRegular;
+    font-size: 3rem;
+    line-height: 3.9063rem;
+    color: var(--white-I);
+  }
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+
+  > button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-self: flex-start;
+    border: 1px solid #eeeeee;
+    border-radius: 0.5rem;
+    margin-top: 1.25rem;
+    padding: 0.8125rem 1.25rem;
+    background-color: var(--dark-I);
+    min-width: 9.575rem;
+
+    h3 {
+      @include textRegular;
+      margin-right: 0.625rem;
+      color: var(--white-I);
+    }
+  }
 }
