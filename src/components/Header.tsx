@@ -1,9 +1,17 @@
-import styles from "../styles/header.module.scss"
+import { useNavigate } from "react-router-dom"
 
 import MenuIcon from "../assets/header/MenuIcon"
 import Logo from "../assets/header/Logo"
 
+import styles from "../styles/header.module.scss"
+
 export function Header({ ...props }) {
+  const navigate = useNavigate()
+
+  function handleNavigateToDashboard() {
+    navigate("/dashboard")
+  }
+
   return (
     <header {...props} className={styles.headerContainer}>
       <div>
@@ -16,7 +24,12 @@ export function Header({ ...props }) {
 
       <div style={{ justifyContent: "flex-end" }}>
         <div className={styles.headerRight}>
-          <button className={styles.connectButton}>Connect wallet</button>
+          <button
+            onClick={handleNavigateToDashboard}
+            className={styles.connectButton}
+          >
+            Conhecer
+          </button>
 
           <button className={styles.iconWrapper}>
             <MenuIcon />

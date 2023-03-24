@@ -5,23 +5,38 @@
   line-height: 1.465rem;
 }
 
+$dot-size: 0.5rem;
+$margin-title: 0.75rem;
+
 .feature {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   margin-top: 1rem;
 
-  > div {
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 999px;
+  .dot {
+    width: $dot-size;
+    height: $dot-size;
+    border-radius: 9999px;
     background-color: var(--white-I);
   }
 
+  > span {
+    @include textRegular;
+    font-family: "Roboto", sans-serif;
+    font-size: 0.75rem;
+    color: var(--dark-II);
+    margin-left: calc($dot-size + $margin-title);
+  }
+}
+
+.groupTitle {
+  display: flex;
+  align-items: center;
+
   > p {
     @include textRegular;
-
     font-family: "Roboto", sans-serif;
     color: var(--white-I);
-    margin-left: 0.75rem;
+    margin-left: $margin-title;
   }
 }

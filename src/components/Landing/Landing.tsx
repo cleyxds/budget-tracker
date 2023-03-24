@@ -1,10 +1,18 @@
+import { useNavigate } from "react-router-dom"
+
 import { Header } from "../Header"
 import { Feature } from "./Feature"
-
-import styles from "../../styles/landing.module.scss"
 import { Footer } from "../Footer"
 
+import styles from "../../styles/landing.module.scss"
+
 export function Landing() {
+  const navigate = useNavigate()
+
+  function handleNavigateToDashboard() {
+    navigate("/dashboard")
+  }
+
   const features = [
     {
       title: "Criar despesas mensais"
@@ -30,7 +38,7 @@ export function Landing() {
 
           <h2>Seu registro financeiro em um só lugar</h2>
 
-          <button>Explore</button>
+          <button onClick={handleNavigateToDashboard}>Explore</button>
         </div>
 
         <div className={styles.featureContainer}>
