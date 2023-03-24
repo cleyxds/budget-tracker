@@ -6,8 +6,8 @@
   --dark-I: #212428;
   --white-I: #e5e5e5;
   --red-I: #ff343f;
+  --dark-II: #68676e;
 
-  font-family: "Roboto", sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 
@@ -18,4 +18,6 @@
 
 body {
   background-color: var(--dark-I);
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
 }

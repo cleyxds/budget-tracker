@@ -21,6 +21,7 @@
     padding: 0 1.6875rem;
     border-radius: 9999px;
     min-width: 9.8125rem;
+    margin-right: 1rem;
 
     font-family: "DM Sans";
     font-weight: 500;
@@ -28,4 +29,13 @@
     line-height: 1.1394rem;
     color: var(--white-I);
   }
+}
+
+.iconWrapper {
+  width: 1.9375rem;
+  height: 1.9375rem;
+  display: "flex";
+  align-items: "center";
+  justify-content: "center";
+  background-color: var(--transparent);
 }

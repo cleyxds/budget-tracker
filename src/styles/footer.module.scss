@@ -1,0 +1,25 @@
+@mixin textRegular {
+  font-family: "DM Sans";
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.465rem;
+}
+
+.footerContainer {
+  display: flex;
+  align-items: center;
+  min-height: 5rem;
+  padding: 0 1.875rem;
+  margin-top: 2rem;
+
+  border-top-width: 0.0625rem;
+  border-top: 1px solid var(--white-I);
+
+  > h3 {
+    @include textRegular;
+    font-weight: 700;
+    font-size: 1.125rem;
+    line-height: 1.465rem;
+    color: var(--dark-II);
+  }
+}

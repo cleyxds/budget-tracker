@@ -1,0 +1,27 @@
+@mixin textRegular {
+  font-family: "DM Sans";
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.465rem;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+
+  > div {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background-color: var(--white-I);
+  }
+
+  > p {
+    @include textRegular;
+
+    font-family: "Roboto", sans-serif;
+    color: var(--white-I);
+    margin-left: 0.75rem;
+  }
+}
