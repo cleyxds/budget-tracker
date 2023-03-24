@@ -1,9 +1,11 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
 
-import { App } from "./App"
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
+
+import { Landing } from "./components/Landing/Landing"
+import { Dashboard } from "./components/Dashboard/Dashboard"
+import { ErrorPage } from "./components/ErrorPage"
 
 import "./styles/reset.css"
 import "./styles/index.scss"
@@ -11,8 +13,12 @@ import "./styles/index.scss"
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
-    errorElement: <></>
+    element: <Landing />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />
   }
 ])
 

@@ -23,7 +23,7 @@ $margin-title: 0.75rem;
   > span {
     @include textRegular;
     font-family: "Roboto", sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.6875rem;
     color: var(--dark-II);
     margin-left: calc($dot-size + $margin-title);
   }

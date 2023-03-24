@@ -1,3 +1,15 @@
+@mixin headerRightButton {
+  background-color: var(--red-I);
+  min-height: 1.875rem;
+  padding: 0 1.6875rem;
+  border-radius: 9999px;
+  font-family: "DM Sans";
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.1394rem;
+  color: var(--white-I);
+}
+
 .headerContainer {
   display: flex;
   align-items: center;
@@ -16,18 +28,16 @@
   align-items: center;
 
   .connectButton {
-    background-color: var(--red-I);
-    min-height: 1.875rem;
-    padding: 0 1.6875rem;
-    border-radius: 9999px;
-    min-width: 6.5625rem;
-    margin-right: 1rem;
+    @include headerRightButton;
 
-    font-family: "DM Sans";
-    font-weight: 500;
-    font-size: 0.875rem;
-    line-height: 1.1394rem;
-    color: var(--white-I);
+    margin-right: 1rem;
+    min-width: 6.5625rem;
+  }
+
+  .loginButton {
+    @include headerRightButton;
+
+    min-width: 2rem;
   }
 }
 
