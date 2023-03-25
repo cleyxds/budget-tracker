@@ -10,21 +10,25 @@
   line-height: 1.465rem;
 }
 
+@mixin regularInput {
+  border-top: 1px solid var(--white-II);
+  border-right: 0;
+  border-bottom: 1px solid var(--white-II);
+  border-left: 1px solid var(--white-II);
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  padding: 1rem 1.6875rem;
+  background-color: var(--dark-I);
+  color: var(--white-I);
+}
+
 .search {
   display: flex;
   margin-top: 3.125rem;
 
   > input {
     @include textRegular;
-    border-top: 1px solid #eeeeee;
-    border-right: 0;
-    border-bottom: 1px solid #eeeeee;
-    border-left: 1px solid #eeeeee;
-    border-top-left-radius: 0.5rem;
-    border-bottom-left-radius: 0.5rem;
-    padding: 1rem 1.6875rem;
-    background-color: var(--dark-I);
-    color: var(--white-I);
+    @include regularInput;
   }
 
   .searchButton {
@@ -60,7 +64,7 @@
     align-items: center;
     justify-content: space-between;
     align-self: flex-start;
-    border: 1px solid #eeeeee;
+    border: 1px solid var(--white-II);
     border-radius: 0.5rem;
     margin-top: 1.25rem;
     padding: 0.8125rem 1.25rem;

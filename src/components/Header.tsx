@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom"
 
+import { HeaderLogin } from "./HeaderLogin"
+
 import MenuIcon from "../assets/header/MenuIcon"
 import Logo from "../assets/header/Logo"
 
@@ -48,9 +50,7 @@ export function Header({
   function renderLOGORightPreset() {
     return (
       <div className={styles.headerRight}>
-        <button onClick={handleLogin} className={styles.loginButton}>
-          Entrar
-        </button>
+        <HeaderLogin />
       </div>
     )
   }

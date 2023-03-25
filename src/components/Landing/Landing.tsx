@@ -46,7 +46,7 @@ export function Landing() {
 
           <ul className={styles.box}>
             {features?.map(item => (
-              <Feature {...item} />
+              <Feature key={item?.title} {...item} />
             ))}
           </ul>
         </div>

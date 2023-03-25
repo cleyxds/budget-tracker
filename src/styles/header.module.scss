@@ -10,6 +10,25 @@
   color: var(--white-I);
 }
 
+@mixin regularInput {
+  border-top: 1px solid var(--white-II);
+  border-right: 0;
+  border-bottom: 1px solid var(--white-II);
+  border-left: 1px solid var(--white-II);
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  padding: 1rem 1.6875rem;
+  background-color: var(--dark-I);
+  color: var(--white-I);
+}
+
+@mixin textRegular {
+  font-family: "DM Sans";
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.465rem;
+}
+
 .headerContainer {
   display: flex;
   align-items: center;
@@ -38,6 +57,57 @@
     @include headerRightButton;
 
     min-width: 2rem;
+  }
+}
+
+.loginRight {
+  position: relative;
+
+  .login {
+    position: absolute;
+    left: calc(-1.875rem - 116%);
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    padding: 0 1rem 1rem 1rem;
+    background-color: var(--white-II);
+    border-radius: 0.5rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+    h3 {
+      @include textRegular;
+      color: var(--red-I);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-top: 1rem;
+    }
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      margin-top: 1rem;
+
+      p {
+        @include textRegular;
+        color: var(--dark-I);
+      }
+
+      input {
+        @include textRegular;
+        margin-top: 0.5rem;
+        border: 1px solid var(--white-II);
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+        background-color: var(--dark-I);
+        color: var(--white-I);
+        flex: 1;
+      }
+    }
+
+    > button {
+      @include headerRightButton;
+      margin-top: 1rem;
+    }
   }
 }
 
