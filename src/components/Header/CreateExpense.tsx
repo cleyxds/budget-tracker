@@ -88,6 +88,8 @@ export function CreateExpense({ anchor }) {
     }
 
     anonymousCreateExpense(expense)
+
+    resetForm()
   }
 
   const handleInput = useCallback((field, e) => {

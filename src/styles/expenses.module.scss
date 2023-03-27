@@ -1,0 +1,42 @@
+@mixin headerRightButton {
+  background-color: var(--red-I);
+  min-height: 1.875rem;
+  padding: 0 1.6875rem;
+  border-radius: 9999px;
+  font-family: "DM Sans";
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.1394rem;
+  color: var(--white-I);
+}
+
+.commonButton {
+  @include headerRightButton;
+  padding: 0;
+  min-width: 8rem;
+}
+
+.expensesContainer {
+  margin-top: 3.125rem;
+  border: 1px solid var(--dark-II);
+  border-radius: 0.5rem;
+  padding: 0 1rem 1rem 1rem;
+  background-color: var(--dark-I);
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+  }
+
+  .expenseItem {
+    flex: 1;
+    margin-top: 1rem;
+  }
+}
+
+.loadMoreButton {
+  @include headerRightButton;
+  align-self: center;
+  margin-top: 2rem;
+}
