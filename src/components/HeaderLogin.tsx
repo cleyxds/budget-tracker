@@ -1,22 +1,16 @@
 import { useCallback } from "react"
-import { Popover } from "@headlessui/react"
 
-import { Input } from "./Input"
-
+import { useAuthentication } from "../hooks/useAuthentication"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 
-import { handleLoginEmail } from "../services/auth"
+import { Popover } from "@headlessui/react"
+import { Input } from "./Input"
 
 import styles from "../styles/header.module.scss"
 
 export function HeaderLogin() {
-  async function handleLogin(values) {
-    const email = values?.email
-    const password = values?.password
-
-    await handleLoginEmail({ email, password })
-  }
+  const { handleLogin } = useAuthentication()
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -27,7 +21,7 @@ export function HeaderLogin() {
 
   const { handleSubmit, setFieldValue, errors, touched } = useFormik({
     initialValues: { email: "", password: "" },
-    onSubmit: handleLogin,
+    onSubmit: values => handleLogin(values.email, values.password),
     validationSchema: LoginSchema
   })
 

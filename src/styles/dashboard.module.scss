@@ -17,7 +17,7 @@
   border-left: 1px solid var(--white-II);
   border-top-left-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
-  padding: 1rem 1.6875rem;
+  padding: 1rem;
   background-color: var(--dark-I);
   color: var(--white-I);
 }
@@ -29,10 +29,11 @@
   > input {
     @include textRegular;
     @include regularInput;
+    line-height: 0;
   }
 
   .searchButton {
-    padding: 0.75rem 1.5625rem;
+    padding: 0.75rem 1rem;
     background-color: var(--red-I);
     margin-left: -0.3rem;
     border-top-right-radius: 0.5rem;

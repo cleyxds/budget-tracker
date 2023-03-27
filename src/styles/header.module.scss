@@ -60,6 +60,12 @@
   }
 }
 
+.commonButton {
+  @include headerRightButton;
+  padding: 0;
+  min-width: 8rem;
+}
+
 .loginRight {
   position: relative;
 
@@ -76,9 +82,9 @@
 
     h3 {
       @include textRegular;
-      color: var(--red-I);
+      color: var(--dark-I);
       font-size: 1rem;
-      font-weight: 700;
+      font-weight: 500;
       margin-top: 1rem;
     }
 
@@ -89,12 +95,13 @@
 
       p {
         @include textRegular;
+        font-family: "Roboto", sans-serif;
+        font-weight: 700;
         color: var(--dark-I);
       }
 
       input {
         @include textRegular;
-        margin-top: 0.5rem;
         border: 1px solid var(--white-II);
         border-radius: 0.5rem;
         padding: 0.75rem;
@@ -114,8 +121,91 @@
 .iconWrapper {
   width: 1.9375rem;
   height: 1.9375rem;
-  display: "flex";
-  align-items: "center";
-  justify-content: "center";
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: var(--transparent);
+  border: 1px solid var(--white-I);
+  border-radius: 0.5rem;
+}
+
+.logo {
+  border: 0;
+}
+
+.createExpense {
+  position: relative;
+  z-index: 10;
+
+  .backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 10;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1.875rem;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+
+    .panel {
+      max-width: calc(20rem - 1.875rem);
+      border-radius: 0.5rem;
+      background-color: var(--white-I);
+
+      .horizontalLine {
+        margin-top: 0.25rem;
+        background-color: var(--dark-I);
+        height: 1px;
+        width: 100%;
+      }
+
+      > h3 {
+        @include textRegular;
+        font-weight: 700;
+        padding: 1rem 1rem 0 1rem;
+        color: var(--dark-I);
+        text-align: center;
+      }
+
+      > form {
+        display: flex;
+        flex-direction: column;
+        padding: 0 1rem 1rem 1rem;
+
+        div {
+          display: flex;
+          flex-direction: column;
+          margin-top: 1rem;
+
+          p {
+            @include textRegular;
+            font-weight: 400;
+            color: var(--dark-I);
+          }
+
+          input {
+            @include textRegular;
+            border: 1px solid var(--white-II);
+            font-weight: 400;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            background-color: var(--dark-I);
+            color: var(--white-I);
+            flex: 1;
+          }
+        }
+
+        button {
+          @include headerRightButton;
+          margin-top: 1rem;
+        }
+      }
+    }
+  }
 }

@@ -5,7 +5,7 @@ export function Input({ error, touched, ...props }) {
     <>
       <input {...props} />
 
-      {!!touched && !!error && <p className={styles.error}>{error}</p>}
+      {!!touched && !!error && <span className={styles.error}>{error}</span>}
     </>
   )
 }

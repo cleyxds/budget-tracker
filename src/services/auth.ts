@@ -1,20 +1,4 @@
-import { auth } from "./firebase"
-
-import { signInWithEmailAndPassword } from "firebase/auth"
-
 import Cookies from "js-cookie"
-
-export async function handleLoginEmail({ email, password }) {
-  try {
-    await signInWithEmailAndPassword(auth, email, password)
-
-    await updateUserCookie({ userId: auth.currentUser.uid })
-
-    alert(`Logado como ${auth.currentUser.uid}`)
-  } catch (error) {
-    throw new Error(error)
-  }
-}
 
 // export async function handleRegister({ event, authentication, callback }) {
 //   if (event === LOGIN_THIRD_PARTY["GOOGLE"]) {
@@ -74,13 +58,19 @@ export async function handleLoginEmail({ email, password }) {
 //   alert("Google register")
 // }
 
-async function updateUserCookie({ userId }) {
-  Cookies.set("JSESSIONID", userId, { expires: 7 })
+const USER_ID_COOKIE = "JSESSIONID"
+
+export async function updateUserCookie(userId) {
+  Cookies.set(USER_ID_COOKIE, userId, { expires: 7, sameSite: "Lax" })
 }
 
-// async function removeUserCookie() {
-//   Cookies.remove("JSESSIONID")
-// }
+export async function removeUserCookie() {
+  Cookies.remove(USER_ID_COOKIE)
+}
+
+export async function getCurrentUser() {
+  return Cookies.get(USER_ID_COOKIE)
+}
 
 // async function proceedAppAuthentication({
 //   formdata,
