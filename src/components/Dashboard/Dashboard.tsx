@@ -1,7 +1,7 @@
-import { Header, PRESETS } from "../Header"
+import { Header, PRESETS } from "../Header/Header"
 import { DashboardSearch } from "./DashboardSearch"
 import { ExploreSection } from "./ExploreSection"
-import { ExpensesList } from "./ExpensesList"
+import { ExpensesList } from "../Expense/ExpensesList"
 import { Footer } from "../Footer"
 
 import styles from "../../styles/dashboard.module.scss"

@@ -1,13 +1,15 @@
 import { useState, useCallback } from "react"
 
 import { useFormik } from "formik"
-import * as Yup from "yup"
 import { nanoid } from "nanoid"
+import * as Yup from "yup"
 
 import { Dialog } from "@headlessui/react"
 
 import { Input } from "../Input"
 import { CurrencyInput } from "../CurrencyInput"
+
+import { anonymousActions } from "../../services/expenses"
 
 import styles from "../../styles/header.module.scss"
 
@@ -20,6 +22,8 @@ String.prototype.replaceAt = function (index, replacement) {
 }
 
 export function CreateExpense({ anchor }) {
+  const { createAnonymousExpense } = anonymousActions
+
   const [isOpen, setIsOpen] = useState(false)
 
   function closeModal() {
@@ -83,13 +87,21 @@ export function CreateExpense({ anchor }) {
       id,
       name: title,
       price: 0,
+      date: "2023-04",
+      timestamp: Date.now(),
       maxPrice: formatPrice(price),
       completed: false
     }
 
-    anonymousCreateExpense(expense)
+    try {
+      await createAnonymousExpense(expense)
 
-    resetForm()
+      setIsOpen(false)
+
+      resetForm()
+    } catch (error) {
+      console.warn(error)
+    }
   }
 
   const handleInput = useCallback((field, e) => {

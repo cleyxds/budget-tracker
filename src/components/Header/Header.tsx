@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom"
-import { useAuthStore } from "../stores/Auth"
+import { useAuthStore } from "../../stores/Auth"
 
 import { HeaderLogin } from "./HeaderLogin"
-import { CreateExpense } from "./Header/CreateExpense"
+import { CreateExpense } from "./CreateExpense"
 
-import MenuIcon from "../assets/header/MenuIcon"
-import Logo from "../assets/header/Logo"
+import MenuIcon from "../../assets/header/MenuIcon"
+import Logo from "../../assets/header/Logo"
 
-import styles from "../styles/header.module.scss"
+import styles from "../../styles/header.module.scss"
 
 export const PRESETS = {
   DEFAULT: "DEFAULT",

@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react"
 
+import { ExpenseItem } from "./ExpenseItem"
+import { ExpensesPrice } from "./ExpensesPrice"
+
+import { anonymousActions } from "../../services/expenses"
+
 import styles from "../../styles/expenses.module.scss"
 
-const ANONYMOUS_ID = "anonymous_expenses"
-
 export function ExpensesList() {
+  const { getAnonymousExpenses } = anonymousActions
+
   const [expenses, setExpenses] = useState([])
 
-  function loadExpenses() {
-    const expenses = JSON.parse(localStorage.getItem(ANONYMOUS_ID)) ?? []
+  async function loadExpenses() {
+    const expenses = await getAnonymousExpenses()
 
     setExpenses(expenses)
   }
@@ -23,15 +28,13 @@ export function ExpensesList() {
 
   return (
     <>
+      <ExpensesPrice values={expenses} />
+
       <section className={styles.expensesContainer}>
         <ul>
-          {expenses?.map(item => {
-            return (
-              <li className={styles.expenseItem} key={item?.id}>
-                {JSON.stringify(item)}
-              </li>
-            )
-          })}
+          {expenses?.map(expense => (
+            <ExpenseItem key={expense?.id} {...expense} />
+          ))}
         </ul>
       </section>
 

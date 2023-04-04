@@ -1,13 +1,13 @@
 import { useCallback } from "react"
 
-import { useAuthentication } from "../hooks/useAuthentication"
+import { useAuthentication } from "../../hooks/useAuthentication"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 
 import { Popover } from "@headlessui/react"
-import { Input } from "./Input"
+import { Input } from "../Input"
 
-import styles from "../styles/header.module.scss"
+import styles from "../../styles/header.module.scss"
 
 export function HeaderLogin() {
   const { handleLogin } = useAuthentication()

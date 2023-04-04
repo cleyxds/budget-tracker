@@ -10,6 +10,13 @@
   color: var(--white-I);
 }
 
+@mixin textRegular {
+  font-family: "DM Sans";
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.465rem;
+}
+
 .commonButton {
   @include headerRightButton;
   padding: 0;
@@ -17,7 +24,7 @@
 }
 
 .expensesContainer {
-  margin-top: 3.125rem;
+  margin-top: 1.5625rem;
   border: 1px solid var(--dark-II);
   border-radius: 0.5rem;
   padding: 0 1rem 1rem 1rem;
@@ -26,12 +33,98 @@
   ul {
     display: flex;
     flex-direction: column;
-    overflow: scroll;
   }
 
   .expenseItem {
     flex: 1;
+    display: flex;
+    align-items: center;
     margin-top: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    > p {
+      @include textRegular;
+      font-size: 1rem;
+    }
+
+    .expenseTitle {
+      flex: 1;
+      max-height: 1.465rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-right: 1.5rem;
+      color: var(--red-I);
+    }
+  }
+}
+
+.expenseExpandedContainer {
+  min-width: calc(20rem - 1.875rem);
+  padding: 1rem;
+
+  .progress {
+    margin-top: 1rem;
+  }
+
+  .switch {
+    display: flex;
+    align-items: center;
+    border-radius: 9999px;
+    height: 1.5rem;
+    width: 2.75rem;
+
+    .switchFlavor {
+      height: 1.2rem;
+      width: 1.2rem;
+      background-color: var(--white-I);
+      border-radius: 9999px;
+      transition: 0.3s translate;
+    }
+
+    .sr-only {
+      @include textRegular;
+      font-weight: 700;
+      position: absolute;
+      padding: 0;
+      margin: -1px;
+      white-space: nowrap;
+      border-width: 0;
+      color: var(--dark-I);
+      margin-left: 3.4rem;
+    }
+  }
+
+  > p {
+    color: var(--dark-I);
+  }
+
+  > span {
+    color: var(--dark-I);
+  }
+}
+
+.expensesPrice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @include textRegular;
+  margin-top: 1.5625rem;
+  align-self: center;
+
+  > span {
+    font-size: 2rem;
+  }
+
+  > p {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    color: var(--white-II);
   }
 }
 
@@ -39,4 +132,20 @@
   @include headerRightButton;
   align-self: center;
   margin-top: 2rem;
+}
+
+.progress {
+  background-color: var(--dark-I);
+  height: 0.5rem;
+  width: 100%;
+  border-radius: 9999px;
+  overflow: hidden;
+
+  .fill {
+    background-size: 0.3125rem;
+    border-radius: 0.3125rem;
+    background-color: var(--dark-I);
+    height: 100%;
+    transition: width 0.7s linear;
+  }
 }
