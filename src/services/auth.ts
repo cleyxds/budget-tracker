@@ -61,7 +61,7 @@ import Cookies from "js-cookie"
 const USER_ID_COOKIE = "JSESSIONID"
 
 export async function updateUserCookie(userId) {
-  Cookies.set(USER_ID_COOKIE, userId, { expires: 7, sameSite: "Lax" })
+  Cookies.set(USER_ID_COOKIE, userId, { expires: 7, sameSite: "none" })
 }
 
 export async function removeUserCookie() {

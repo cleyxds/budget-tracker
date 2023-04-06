@@ -1,0 +1,42 @@
+@mixin textRegular {
+  font-family: "DM Sans";
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.465rem;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.switch {
+  display: flex;
+  align-items: center;
+  border-radius: 9999px;
+  height: 1.5rem;
+  width: 2.75rem;
+
+  .flavor {
+    height: 1.2rem;
+    width: 1.2rem;
+    background-color: var(--white-I);
+    border-radius: 9999px;
+    transition: 0.3s translate;
+  }
+
+  .selected {
+    translate: 1.4375rem;
+  }
+
+  .unselected {
+    translate: 0.125rem;
+  }
+}
+
+.sr-only {
+  @include textRegular;
+  font-weight: 700;
+  color: var(--dark-I);
+  margin-left: 0.7rem;
+}

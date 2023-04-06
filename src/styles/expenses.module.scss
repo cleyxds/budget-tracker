@@ -67,6 +67,10 @@
   min-width: calc(20rem - 1.875rem);
   padding: 1rem;
 
+  .spacing {
+    margin-top: 1rem;
+  }
+
   .progress {
     margin-top: 1rem;
   }
@@ -100,10 +104,14 @@
   }
 
   > p {
+    @include textRegular;
+    font-weight: 700;
     color: var(--dark-I);
   }
 
   > span {
+    @include textRegular;
+    font-weight: 500;
     color: var(--dark-I);
   }
 }

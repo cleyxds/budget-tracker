@@ -6,6 +6,8 @@ async function getAnonymousExpenses() {
   try {
     const expenses = Cookies.get(ANONYMOUS_ID) ?? []
 
+    if (!expenses?.length) return []
+
     const data = JSON.parse(expenses)
 
     return data
@@ -29,13 +31,20 @@ async function createAnonymousExpense(expense) {
 
     const data = JSON.stringify(expenses)
 
-    Cookies.set(ANONYMOUS_ID, data, { expires: 30, sameSite: "Lax" })
+    Cookies.set(ANONYMOUS_ID, data, { expires: 30, sameSite: "none" })
   } catch (error) {
     throw new Error(error)
   }
 }
 
+async function updateAnonymousExpenses(dataParam) {
+  const data = JSON.stringify(dataParam)
+
+  Cookies.set(ANONYMOUS_ID, data, { expires: 30, sameSite: "none" })
+}
+
 export const anonymousActions = {
   getAnonymousExpenses,
-  createAnonymousExpense
+  createAnonymousExpense,
+  updateAnonymousExpenses
 }

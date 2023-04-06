@@ -47,28 +47,6 @@ export function CreateExpense({ anchor }) {
       validationSchema: NewExpenseSchema
     })
 
-  function anonymousCreateExpense(expense) {
-    try {
-      const ANONYMOUS_ID = "anonymous_expenses"
-      const expenses = []
-
-      const anonymousExpenses =
-        JSON.parse(localStorage.getItem(ANONYMOUS_ID)) ?? []
-
-      anonymousExpenses?.forEach(anonymousExpense => {
-        expenses.push(anonymousExpense)
-      })
-
-      expenses.push(expense)
-
-      localStorage.setItem(ANONYMOUS_ID, JSON.stringify(expenses))
-
-      setIsOpen(false)
-    } catch (error) {
-      console.warn(error)
-    }
-  }
-
   async function createExpense(title, price) {
     function formatPrice(value: string) {
       let price = value
@@ -86,11 +64,13 @@ export function CreateExpense({ anchor }) {
     const expense = {
       id,
       name: title,
-      price: 0,
+      price: formatPrice(price),
+      priceSpent: 0,
       date: "2023-04",
-      timestamp: Date.now(),
-      maxPrice: formatPrice(price),
-      completed: false
+      createdAt: Date.now(),
+      isCompleted: false,
+      isRecurrent: false,
+      isOffline: true
     }
 
     try {
