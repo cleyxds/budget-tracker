@@ -31,16 +31,16 @@ async function createAnonymousExpense(expense) {
 
     const data = JSON.stringify(expenses)
 
-    Cookies.set(ANONYMOUS_ID, data, { expires: 30, sameSite: "none" })
+    Cookies.set(ANONYMOUS_ID, data, { expires: 30, sameSite: "lax" })
   } catch (error) {
     throw new Error(error)
   }
 }
 
-async function updateAnonymousExpenses(dataParam) {
-  const data = JSON.stringify(dataParam)
+async function updateAnonymousExpenses(expenses) {
+  const data = JSON.stringify(expenses)
 
-  Cookies.set(ANONYMOUS_ID, data, { expires: 30, sameSite: "none" })
+  Cookies.set(ANONYMOUS_ID, data, { expires: 30, sameSite: "lax" })
 }
 
 export const anonymousActions = {

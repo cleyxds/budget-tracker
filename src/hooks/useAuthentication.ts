@@ -16,7 +16,7 @@ export function useAuthentication() {
     try {
       await signInWithEmailAndPassword(firebaseauth, email, password)
 
-      await updateUserCookie(firebaseauth.currentUser.uid)
+      await updateUserCookie(firebaseauth?.currentUser?.uid)
 
       await authenticateUser()
     } catch (error) {
@@ -42,9 +42,9 @@ export function useAuthentication() {
         ...user
       })
     } catch (error) {
-      throw new Error(error)
+      console.warn(error)
     }
   }
 
-  return { handleLogin }
+  return { handleLogin, authenticateUser }
 }

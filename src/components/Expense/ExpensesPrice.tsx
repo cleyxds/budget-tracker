@@ -7,7 +7,7 @@ export function ExpensesPrice({ values = [] }) {
 
   function calculateResult(values) {
     const price = values
-      ?.map(item => item?.maxPrice)
+      ?.map(item => item?.price)
       ?.reduce((prev, curr) => prev + curr, 0)
 
     setPrice(price)

@@ -1,5 +1,7 @@
 import Cookies from "js-cookie"
 
+import { ERRORS } from "../constants/errors"
+
 // export async function handleRegister({ event, authentication, callback }) {
 //   if (event === LOGIN_THIRD_PARTY["GOOGLE"]) {
 //     await handleGoogleRegister()
@@ -61,7 +63,7 @@ import Cookies from "js-cookie"
 const USER_ID_COOKIE = "JSESSIONID"
 
 export async function updateUserCookie(userId) {
-  Cookies.set(USER_ID_COOKIE, userId, { expires: 7, sameSite: "none" })
+  Cookies.set(USER_ID_COOKIE, userId, { expires: 7, sameSite: "lax" })
 }
 
 export async function removeUserCookie() {
@@ -69,7 +71,11 @@ export async function removeUserCookie() {
 }
 
 export async function getCurrentUser() {
-  return Cookies.get(USER_ID_COOKIE)
+  try {
+    return Cookies.get(USER_ID_COOKIE)
+  } catch (error) {
+    throw new Error(ERRORS.NO_CREDENTIALS)
+  }
 }
 
 // async function proceedAppAuthentication({

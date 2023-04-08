@@ -18,6 +18,7 @@ export function ExpenseItem({ ...item }) {
     setIsExpanded(true)
   }
 
+
   async function updateExpenseFieldById(expenseId, field, value) {
     const expenses = await anonymousActions.getAnonymousExpenses()
     const expense = expenses?.find(item => item?.id === expenseId)
@@ -30,7 +31,7 @@ export function ExpenseItem({ ...item }) {
 
     expensesArray[expenseIndex] = expenseObject
 
-    anonymousActions.updateAnonymousExpenses(expensesArray)
+    await anonymousActions.updateAnonymousExpenses(expensesArray)
   }
 
   const [isExpanded, setIsExpanded] = useState(false)

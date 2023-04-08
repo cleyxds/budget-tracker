@@ -66,58 +66,6 @@
   min-width: 8rem;
 }
 
-.loginRight {
-  position: relative;
-
-  .login {
-    position: absolute;
-    left: calc(-1.875rem - 116%);
-    display: flex;
-    flex-direction: column;
-    margin-top: 1rem;
-    padding: 0 1rem 1rem 1rem;
-    background-color: var(--white-II);
-    border-radius: 0.5rem;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-
-    h3 {
-      @include textRegular;
-      color: var(--dark-I);
-      font-size: 1rem;
-      font-weight: 500;
-      margin-top: 1rem;
-    }
-
-    > div {
-      display: flex;
-      flex-direction: column;
-      margin-top: 1rem;
-
-      p {
-        @include textRegular;
-        font-family: "Roboto", sans-serif;
-        font-weight: 700;
-        color: var(--dark-I);
-      }
-
-      input {
-        @include textRegular;
-        border: 1px solid var(--white-II);
-        border-radius: 0.5rem;
-        padding: 0.75rem;
-        background-color: var(--dark-I);
-        color: var(--white-I);
-        flex: 1;
-      }
-    }
-
-    > button {
-      @include headerRightButton;
-      margin-top: 1rem;
-    }
-  }
-}
-
 .iconWrapper {
   width: 1.9375rem;
   height: 1.9375rem;
@@ -207,5 +155,51 @@
         }
       }
     }
+  }
+}
+
+.login {
+  left: calc(-1.875rem - 116%);
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem 1rem 1rem;
+  background-color: var(--white-II);
+  border-radius: 0.5rem;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+  h3 {
+    @include textRegular;
+    color: var(--dark-I);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 1rem;
+  }
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+
+    p {
+      @include textRegular;
+      font-family: "Roboto", sans-serif;
+      font-weight: 700;
+      color: var(--dark-I);
+    }
+
+    input {
+      @include textRegular;
+      border: 1px solid var(--white-II);
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      background-color: var(--dark-I);
+      color: var(--white-I);
+      flex: 1;
+    }
+  }
+
+  > button {
+    @include headerRightButton;
+    margin-top: 1rem;
   }
 }
