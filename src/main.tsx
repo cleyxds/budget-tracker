@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { App } from "./App"
 import { Landing } from "./components/Landing/Landing"
 import { Dashboard } from "./components/Dashboard/Dashboard"
+import { Settings } from "./components/Settings"
 import { ErrorPage } from "./components/ErrorPage"
 
 import "./styles/reset.css"
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />
+  },
+  {
+    path: "/settings",
+    element: <Settings />
   }
 ])
 

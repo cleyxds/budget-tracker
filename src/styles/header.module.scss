@@ -203,3 +203,26 @@
     margin-top: 1rem;
   }
 }
+
+.menu {
+  position: relative;
+
+  .navigator {
+    position: absolute;
+    right: 0rem;
+    margin-top: 1rem;
+    padding: 0 0.5rem 0.5rem 0.5rem;
+    background-color: var(--white-I);
+    box-shadow: rgba(255, 255, 255, 0.24) 0px 3px 8px;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+
+    > a {
+      @include textRegular;
+      margin-top: 0.5rem;
+      color: var(--dark-I);
+      text-decoration: underline;
+    }
+  }
+}

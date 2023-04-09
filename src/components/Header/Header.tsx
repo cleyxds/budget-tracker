@@ -3,8 +3,8 @@ import { useAuthStore } from "../../stores/Auth"
 
 import { HeaderLogin } from "./HeaderLogin"
 import { CreateExpense } from "./CreateExpense"
+import { Menu } from "./Menu"
 
-import MenuIcon from "../../assets/header/MenuIcon"
 import Logo from "../../assets/header/Logo"
 
 import styles from "../../styles/header.module.scss"
@@ -50,7 +50,7 @@ export function Header({
       },
       right: {
         style: { justifyContent: "flex-end" },
-        render: isAuthenticated ? renderUserMenu : renderRightPreset
+        render: isAuthenticated ? Menu : renderRightPreset
       }
     }
   }
@@ -103,14 +103,6 @@ export function Header({
       <CreateExpense
         anchor={onClick => renderButton("Criar despesa", onClick)}
       />
-    )
-  }
-
-  function renderUserMenu() {
-    return (
-      <button className={styles.iconWrapper}>
-        <MenuIcon />
-      </button>
     )
   }
 
