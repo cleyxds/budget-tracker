@@ -1,0 +1,34 @@
+@mixin textRegular {
+  font-family: "DM Sans";
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.465rem;
+}
+
+.settings {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .options {
+    @include textRegular;
+    font-size: 0.9375rem;
+    padding: 0 1.875rem;
+
+    .optionItemWrapper {
+      display: flex;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+
+    .optionItem {
+      display: flex;
+      align-items: center;
+    }
+
+    .spacing {
+      margin-left: 0.5rem;
+    }
+  }
+}

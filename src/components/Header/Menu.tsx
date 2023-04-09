@@ -13,7 +13,11 @@ export function Menu() {
   ]
 
   function renderOption(item) {
-    return <a href={item?.url}>{item?.title}</a>
+    return (
+      <a key={item?.url} href={item?.url}>
+        {item?.title}
+      </a>
+    )
   }
 
   return (

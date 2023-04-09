@@ -136,3 +136,7 @@ button:hover {
   opacity: 0.8;
   transition: opacity 0.3s;
 }
+button:disabled {
+  opacity: 1;
+  cursor: auto;
+}

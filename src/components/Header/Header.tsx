@@ -12,7 +12,8 @@ import styles from "../../styles/header.module.scss"
 export const PRESETS = {
   DEFAULT: "DEFAULT",
   LOGO: "LOGO",
-  DASHBOARD: "DASHBOARD"
+  DASHBOARD: "DASHBOARD",
+  TITLE: "TITLE"
 }
 
 export function Header({
@@ -37,6 +38,14 @@ export function Header({
       left: { render: renderLOGO },
       middle: { style: { display: "none" } },
       right: { style: { display: "none" } }
+    },
+    [PRESETS.TITLE]: {
+      left: { render: renderLOGO },
+      middle: {
+        render: () => renderTitle(props?.title),
+        style: { justifyContent: "center" }
+      },
+      right: null
     },
     [PRESETS.DASHBOARD]: {
       left: { render: renderLOGO },
@@ -65,6 +74,12 @@ export function Header({
     )
   }
 
+  function renderTitle(title?: string) {
+    if (!title) return null
+
+    return <h1 className={styles.title}>{title}</h1>
+  }
+
   function renderRightPreset() {
     return (
       <div className={styles.headerRight}>
@@ -83,9 +98,7 @@ export function Header({
           Conhecer
         </button>
 
-        <button className={styles.iconWrapper}>
-          <MenuIcon />
-        </button>
+        <Menu />
       </div>
     )
   }

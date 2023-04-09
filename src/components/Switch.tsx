@@ -9,13 +9,17 @@ type BTrackerSwitchProps = {
   onChange?: (value: boolean) => void
   title?: null | string
   className?: string
+  color?: string[]
+  flavorColor?: string
 }
 
 export function BTrackerSwitch({
   value = false,
   onChange,
   title = null,
-  className = ""
+  className = "",
+  color = ["var(--red-I)", "var(--dark-I)"],
+  flavorColor = "var(--white-I)"
 }: BTrackerSwitchProps) {
   const [switchState, setSwitchState] = useState(value)
 
@@ -34,11 +38,12 @@ export function BTrackerSwitch({
         checked={switchState}
         onChange={setSwitchState}
         className={styles.switch}
-        style={{
-          backgroundColor: switchState ? "var(--red-I)" : "var(--dark-I)"
-        }}
+        style={{ backgroundColor: switchState ? color[0] : color[1] }}
       >
-        <span className={`${styles.flavor} ${flavorSelection}`} />
+        <span
+          className={`${styles.flavor} ${flavorSelection}`}
+          style={{ backgroundColor: flavorColor }}
+        />
       </Switch>
 
       {hasTitle && <span className={styles["sr-only"]}>{title}</span>}

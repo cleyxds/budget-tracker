@@ -9,7 +9,7 @@ import { LoginSchema } from "./utils/schema"
 
 import styles from "../../styles/header.module.scss"
 
-export function LoginForm({ actions }) {
+export function LoginForm({ actions }: { actions?: any }) {
   const { handleLogin } = useAuthentication()
 
   const { handleSubmit, setFieldValue, errors, touched } = useFormik({

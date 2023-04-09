@@ -40,6 +40,13 @@
     display: flex;
     flex: 1;
   }
+
+  .title {
+    @include textRegular;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--white-I);
+  }
 }
 
 .headerRight {
