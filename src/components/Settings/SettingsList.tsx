@@ -1,15 +1,20 @@
 import { useState } from "react"
 
+import { useNavigate } from "react-router-dom"
+import { useAuthentication } from "../../hooks/useAuthentication"
+
 import { Loader } from "../Loader"
 import { BTrackerSwitch } from "../Switch"
 
-import { wait } from "../../utils/wait"
-
 import LogoutIcon from "../../assets/icons/LogoutIcon"
+import HomeIcon from "../../assets/icons/HomeIcon"
 
 import styles from "../../styles/settings.module.scss"
 
 export function SettingsList() {
+  const navigate = useNavigate()
+  const { handleLogout: asyncHandleLogout } = useAuthentication()
+
   const [notificationsEnabled, setNotificationsEnabled] = useState(false)
 
   const options = [
@@ -33,6 +38,11 @@ export function SettingsList() {
           color={["var(--red-I)", "var(--white-I)"]}
         />
       )
+    },
+    {
+      title: "Início",
+      icon: () => <HomeIcon color="var(--white-I)" size={24} />,
+      handler: () => navigate("/")
     },
     {
       title: "Sair",
@@ -62,11 +72,17 @@ export function SettingsList() {
   }
 
   async function handleLogout() {
-    updateLoadingIndex(3, true)
+    try {
+      updateLoadingIndex(3, true)
 
-    await wait({ ms: 2000, random: true })
+      await asyncHandleLogout()
 
-    updateLoadingIndex(3, false)
+      updateLoadingIndex(3, false)
+
+      navigate("/")
+    } catch (error) {
+      alert("Houve um problema ao sair da sua conta")
+    }
   }
 
   const [loadingIndexes, setLoadingIndexes] = useState(generateLoadingIndexes)
@@ -81,17 +97,14 @@ export function SettingsList() {
     return (
       <div key={item?.title} className={styles.optionItemWrapper}>
         <li className={styles.optionItem}>
+          {hasIcon && <IconComponent />}
+
           <button
             disabled={isDisabled ?? false}
             onClick={handler}
+            className={isDisabled ? styles.spacing : undefined}
             style={{ color: item?.color ?? "var(--white-I)" }}
           >
-            {hasIcon && (
-              <IconComponent
-                className={isDisabled ? styles.spacing : undefined}
-              />
-            )}
-
             {item?.title}
           </button>
         </li>

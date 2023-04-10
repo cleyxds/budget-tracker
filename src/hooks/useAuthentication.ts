@@ -5,12 +5,16 @@ import { auth as firebaseauth } from "../services/firebase"
 
 import { signInWithEmailAndPassword } from "firebase/auth"
 
-import { getCurrentUser, updateUserCookie } from "../services/auth"
+import {
+  getCurrentUser,
+  removeUserCookie,
+  updateUserCookie
+} from "../services/auth"
 import { getUserData } from "../services/user"
 
 export function useAuthentication() {
-  const { user: storedUser, setUser } = useUserStore()
-  const { auth, setAuth } = useAuthStore()
+  const { user: storedUser, setUser, clearUser } = useUserStore()
+  const { auth, setAuth, clearAuth } = useAuthStore()
 
   async function handleLogin(email: string, password: string) {
     try {
@@ -46,5 +50,11 @@ export function useAuthentication() {
     }
   }
 
-  return { handleLogin, authenticateUser }
+  async function handleLogout() {
+    await removeUserCookie()
+    clearAuth()
+    clearUser()
+  }
+
+  return { handleLogin, handleLogout, authenticateUser }
 }

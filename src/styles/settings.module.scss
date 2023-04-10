@@ -23,9 +23,12 @@
     }
 
     .optionItem {
+      display: flex;
+      align-items: center;
+
       > button {
-        display: flex;
-        align-items: center;
+        margin-left: 0.5rem;
+        margin-top: 0.1875rem;
       }
     }
 
@@ -33,4 +36,12 @@
       margin-right: 0.5rem;
     }
   }
+}
+
+.unlogged {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.875rem;
+  min-height: 100vh;
 }

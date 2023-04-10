@@ -11,7 +11,12 @@ export function Settings() {
   const { auth } = useAuthStore()
   const { isAuthenticated } = auth
 
-  if (!isAuthenticated) return <LoginForm />
+  if (!isAuthenticated)
+    return (
+      <main className={styles.unlogged}>
+        <LoginForm />
+      </main>
+    )
 
   return (
     <main className={styles.settings}>

@@ -1,6 +1,6 @@
 import styles from "../../styles/dashboard.module.scss"
 
-import SearchIcon from "../../assets/dashboard/SearchIcon"
+import MagnifyGlassIcon from "../../assets/icons/MagnifyGlassIcon"
 import ChevronDown from "../../assets/ChevronDown"
 
 export function DashboardSearch() {
@@ -16,7 +16,7 @@ export function DashboardSearch() {
         <input placeholder="Pesquise por despesas" type="text" />
 
         <button className={styles.searchButton}>
-          <SearchIcon />
+          <MagnifyGlassIcon size={24} color="var(--white-I)" />
         </button>
       </div>
 
