@@ -5,6 +5,8 @@ import { BTrackerSwitch } from "../Switch"
 
 import { wait } from "../../utils/wait"
 
+import LogoutIcon from "../../assets/icons/LogoutIcon"
+
 import styles from "../../styles/settings.module.scss"
 
 export function SettingsList() {
@@ -22,8 +24,9 @@ export function SettingsList() {
     {
       title: "Habilitar notificações",
       disabled: true,
-      icon: () => (
+      icon: props => (
         <BTrackerSwitch
+          {...props}
           value={notificationsEnabled}
           onChange={setNotificationsEnabled}
           flavorColor="var(--dark-I)"
@@ -34,7 +37,7 @@ export function SettingsList() {
     {
       title: "Sair",
       color: "var(--red-I)",
-      icon: null,
+      icon: () => <LogoutIcon color="var(--red-I)" size={24} />,
       handler: handleLogout
     }
   ]
@@ -78,14 +81,17 @@ export function SettingsList() {
     return (
       <div key={item?.title} className={styles.optionItemWrapper}>
         <li className={styles.optionItem}>
-          {hasIcon && <IconComponent />}
-
           <button
-            className={isDisabled ? styles.spacing : undefined}
             disabled={isDisabled ?? false}
             onClick={handler}
             style={{ color: item?.color ?? "var(--white-I)" }}
           >
+            {hasIcon && (
+              <IconComponent
+                className={isDisabled ? styles.spacing : undefined}
+              />
+            )}
+
             {item?.title}
           </button>
         </li>

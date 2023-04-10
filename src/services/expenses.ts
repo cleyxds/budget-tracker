@@ -43,8 +43,27 @@ async function updateAnonymousExpenses(expenses) {
   Cookies.set(ANONYMOUS_ID, data, { expires: 30, sameSite: "lax" })
 }
 
+async function deleteAnonymousExpense(expenseId) {
+  function appyExpenseIdFilter(item) {
+    return item?.id !== expenseId
+  }
+
+  try {
+    const anonymousExpenses = await getAnonymousExpenses()
+
+    const expenses = anonymousExpenses?.filter(appyExpenseIdFilter)
+
+    const data = JSON.stringify(expenses)
+
+    Cookies.set(ANONYMOUS_ID, data, { expires: 30, sameSite: "lax" })
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 export const anonymousActions = {
   getAnonymousExpenses,
   createAnonymousExpense,
-  updateAnonymousExpenses
+  updateAnonymousExpenses,
+  deleteAnonymousExpense
 }

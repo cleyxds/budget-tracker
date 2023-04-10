@@ -71,6 +71,35 @@
     margin-top: 1rem;
   }
 
+  .confirm {
+    background-color: var(--dark-I);
+  }
+
+  .complete {
+    @include textRegular;
+    margin-top: 0.5rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    color: var(--dark-I);
+
+    > svg {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .maxWidth {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > svg {
+      margin-right: 0.25rem;
+    }
+  }
+
   .progress {
     margin-top: 1rem;
   }
@@ -101,6 +130,15 @@
       color: var(--dark-I);
       margin-left: 3.4rem;
     }
+  }
+
+  .editable {
+    @include textRegular;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--dark-I);
+    background-color: var(--transparent);
+    width: 100%;
   }
 
   > p {

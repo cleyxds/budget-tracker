@@ -4,6 +4,9 @@ import { Dialog } from "@headlessui/react"
 
 import { BTrackerProgress } from "./Progress"
 import { BTrackerSwitch } from "../Switch"
+import { BTrackerComplete } from "../BTrackerComplete"
+import { DeleteExpenseButton } from "./DeleteExpenseButton"
+import { Input } from "../Input"
 
 import { anonymousActions } from "../../services/expenses"
 import { months } from "../../constants/months"
@@ -13,11 +16,11 @@ import headerStyles from "../../styles/header.module.scss"
 
 export function ExpenseItem({ ...item }) {
   const currency = "R$"
+  const enableProgress = false
 
   function handleExpandItem() {
     setIsExpanded(true)
   }
-
 
   async function updateExpenseFieldById(expenseId, field, value) {
     const expenses = await anonymousActions.getAnonymousExpenses()
@@ -68,39 +71,52 @@ export function ExpenseItem({ ...item }) {
         </p>
       </li>
 
-      <Dialog
-        as="div"
-        className={headerStyles.createExpense}
-        open={isExpanded}
-        onClose={() => setIsExpanded(false)}
-      >
-        <div className={headerStyles.backdrop} aria-hidden="true" />
+      {isExpanded && (
+        <Dialog
+          as="div"
+          className={headerStyles.createExpense}
+          open={isExpanded}
+          onClose={() => setIsExpanded(false)}
+        >
+          <div className={headerStyles.backdrop} aria-hidden="true" />
 
-        <div className={headerStyles.container}>
-          <Dialog.Panel
-            className={`${headerStyles.panel} ${styles.expenseExpandedContainer}`}
-          >
-            <p>{item?.name}</p>
+          <div className={headerStyles.container}>
+            <Dialog.Panel
+              className={`${headerStyles.panel} ${styles.expenseExpandedContainer}`}
+            >
+              <Input disabled className={styles.editable} value={item?.name} />
 
-            <span>{month}</span>
+              <span>{month}</span>
 
-            <BTrackerProgress
-              value={progress}
-              color="var(--red-I)"
-              className={styles.progress}
-            />
+              {enableProgress && (
+                <BTrackerProgress
+                  value={progress}
+                  color="var(--red-I)"
+                  className={styles.progress}
+                />
+              )}
 
-            <BTrackerSwitch
-              value={item?.isRecurrent}
-              onChange={value => {
-                updateExpenseFieldById(item?.id, "isRecurrent", value)
-              }}
-              className={styles.spacing}
-              title="Habilitar recorrencia"
-            />
-          </Dialog.Panel>
-        </div>
-      </Dialog>
+              <BTrackerComplete
+                value={item?.isCompleted}
+                onChange={value => {
+                  updateExpenseFieldById(item?.id, "isCompleted", value)
+                }}
+              />
+
+              <BTrackerSwitch
+                value={item?.isRecurrent}
+                onChange={value => {
+                  updateExpenseFieldById(item?.id, "isRecurrent", value)
+                }}
+                className={styles.spacing}
+                title="Habilitar recorrencia"
+              />
+
+              <DeleteExpenseButton expense={item} />
+            </Dialog.Panel>
+          </div>
+        </Dialog>
+      )}
     </>
   )
 }

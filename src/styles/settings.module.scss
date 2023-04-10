@@ -23,12 +23,14 @@
     }
 
     .optionItem {
-      display: flex;
-      align-items: center;
+      > button {
+        display: flex;
+        align-items: center;
+      }
     }
 
     .spacing {
-      margin-left: 0.5rem;
+      margin-right: 0.5rem;
     }
   }
 }
