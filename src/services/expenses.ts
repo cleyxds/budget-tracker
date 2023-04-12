@@ -1,5 +1,10 @@
 import Cookies from "js-cookie"
 
+import { TExpense } from "../stores/Expenses"
+
+import { expenseCollection } from "./firebase"
+import { addDoc } from "firebase/firestore"
+
 const ANONYMOUS_ID = "anonymous_expenses"
 
 async function getAnonymousExpenses() {
@@ -8,7 +13,7 @@ async function getAnonymousExpenses() {
 
     if (!expenses?.length) return []
 
-    const data = JSON.parse(expenses)
+    const data: TExpense[] = JSON.parse(expenses)
 
     return data
   } catch (error) {
@@ -17,9 +22,9 @@ async function getAnonymousExpenses() {
   }
 }
 
-async function createAnonymousExpense(expense) {
+async function createAnonymousExpense(expense: TExpense) {
   try {
-    const expenses = []
+    const expenses: TExpense[] = []
 
     const anonymousExpenses = await getAnonymousExpenses()
 
@@ -37,13 +42,13 @@ async function createAnonymousExpense(expense) {
   }
 }
 
-async function updateAnonymousExpenses(expenses) {
+async function updateAnonymousExpenses(expenses: TExpense[]) {
   const data = JSON.stringify(expenses)
 
   Cookies.set(ANONYMOUS_ID, data, { expires: 30, sameSite: "lax" })
 }
 
-async function deleteAnonymousExpense(expenseId) {
+async function deleteAnonymousExpense(expenseId: string) {
   function appyExpenseIdFilter(item) {
     return item?.id !== expenseId
   }
@@ -59,6 +64,25 @@ async function deleteAnonymousExpense(expenseId) {
   } catch (error) {
     throw new Error(error)
   }
+}
+
+async function createExpense(expense: TExpense) {
+  try {
+    const { id, ...expenseRest } = expense
+
+    const expenseRef = await addDoc(expenseCollection, expenseRest)
+
+    const expenseId = expenseRef?.id
+
+    console.log({ message: "createExpense", expenseRef, expenseId })
+    return expenseId
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+export const expensesActions = {
+  createExpense
 }
 
 export const anonymousActions = {

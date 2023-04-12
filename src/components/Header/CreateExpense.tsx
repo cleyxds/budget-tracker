@@ -1,5 +1,7 @@
 import { useState, useCallback } from "react"
 
+import { TExpense } from "../../stores/Expenses"
+
 import { useFormik } from "formik"
 import { nanoid } from "nanoid"
 import * as Yup from "yup"
@@ -61,7 +63,7 @@ export function CreateExpense({ anchor }) {
 
     const id = nanoid(28)
 
-    const expense = {
+    const expense: TExpense = {
       id,
       name: title,
       price: formatPrice(price),

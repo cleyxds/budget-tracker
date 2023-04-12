@@ -17,6 +17,12 @@
   line-height: 1.465rem;
 }
 
+@mixin commonButton {
+  @include headerRightButton;
+  padding: 0;
+  min-width: 8rem;
+}
+
 .commonButton {
   @include headerRightButton;
   padding: 0;
@@ -193,5 +199,49 @@
     background-color: var(--dark-I);
     height: 100%;
     transition: width 0.7s linear;
+  }
+}
+
+.syncModalContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+
+  > svg {
+    align-self: center;
+  }
+
+  > h2,
+  p {
+    margin-top: 0.5rem;
+  }
+
+  > h2 {
+    @include textRegular;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--dark-I);
+  }
+
+  > p {
+    @include textRegular;
+    font-weight: 400;
+    color: var(--dark-II);
+  }
+
+  .groupButton {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.25rem;
+
+    > button {
+      @include commonButton;
+      min-width: 7.1rem;
+      margin-right: 0.5rem;
+
+      &:first-child {
+        background-color: var(--dark-I);
+      }
+    }
   }
 }

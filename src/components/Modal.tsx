@@ -1,10 +1,10 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { Dialog } from "@headlessui/react"
 
 import styles from "../styles/modal.module.scss"
 
-export function Modal({ anchor, render }) {
+export function Modal({ anchor, render, openImmediately = false }) {
   const hasAnchor = !!anchor
   const hasRender = !!render
   const AnchorComponent = anchor
@@ -22,6 +22,10 @@ export function Modal({ anchor, render }) {
     setIsOpen(true)
   }
 
+  useEffect(() => {
+    if (openImmediately) openModal()
+  }, [])
+
   const actions = {
     openModal,
     closeModal
@@ -31,20 +35,22 @@ export function Modal({ anchor, render }) {
     <>
       {hasAnchor && <AnchorComponent actions={actions} />}
 
-      <Dialog
-        as="div"
-        className={styles.modalContainer}
-        open={isOpen}
-        onClose={closeModal}
-      >
-        <div className={styles.backdrop} aria-hidden="true" />
+      {isOpen && (
+        <Dialog
+          as="div"
+          className={styles.modalContainer}
+          open={isOpen}
+          onClose={closeModal}
+        >
+          <div className={styles.backdrop} aria-hidden="true" />
 
-        <div className={styles.container}>
-          <Dialog.Panel className={styles.panel}>
-            {hasRender && <RenderComponent actions={actions} />}
-          </Dialog.Panel>
-        </div>
-      </Dialog>
+          <div className={styles.container}>
+            <Dialog.Panel className={styles.panel}>
+              {hasRender && <RenderComponent actions={actions} />}
+            </Dialog.Panel>
+          </div>
+        </Dialog>
+      )}
     </>
   )
 }

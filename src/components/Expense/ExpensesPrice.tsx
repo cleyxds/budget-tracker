@@ -1,21 +1,34 @@
 import { useEffect, useState } from "react"
 
+import { TExpense } from "../../stores/Expenses"
+
 import styles from "../../styles/expenses.module.scss"
 
-export function ExpensesPrice({ values = [] }) {
-  const [price, setPrice] = useState(null)
+type TExpensesPriceProps = {
+  expenses: TExpense[]
+}
 
-  function calculateResult(values) {
-    const price = values
+type TPriceState = string | number | null
+
+export function ExpensesPrice({ expenses }: TExpensesPriceProps) {
+  const [price, setPrice] = useState<TPriceState>(null)
+
+  function filterByCompleted(item: TExpense) {
+    return !!item?.isCompleted
+  }
+
+  function calculateTotalPrice(expenses: TExpense[]) {
+    const price = expenses
+      ?.filter(filterByCompleted)
       ?.map(item => item?.price)
-      ?.reduce((prev, curr) => prev + curr, 0)
+      ?.reduce((prev, curr) => Number(prev) + Number(curr), 0)
 
     setPrice(price)
   }
 
   useEffect(() => {
-    calculateResult(values)
-  }, [values])
+    calculateTotalPrice(expenses)
+  }, [expenses])
 
   if (!price) return null
 
