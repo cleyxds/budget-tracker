@@ -10,7 +10,7 @@ import {
   removeUserCookie,
   updateUserCookie
 } from "../services/auth"
-import { getUserData } from "../services/user"
+import { userActions } from "../services/user"
 
 export function useAuthentication() {
   const { user: storedUser, setUser, clearUser } = useUserStore()
@@ -32,7 +32,7 @@ export function useAuthentication() {
     try {
       const userId = await getCurrentUser()
 
-      const user = await getUserData(userId)
+      const user = await userActions.getUserData(userId)
 
       setAuth({
         ...auth,

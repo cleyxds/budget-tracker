@@ -66,15 +66,18 @@ async function deleteAnonymousExpense(expenseId: string) {
   }
 }
 
-async function createExpense(expense: TExpense) {
+async function createExpense(expense: TExpense, userId: string) {
   try {
     const { id, ...expenseRest } = expense
 
-    const expenseRef = await addDoc(expenseCollection, expenseRest)
+    const expenseToCreate = {
+      userId,
+      ...expenseRest
+    }
+    const expenseRef = await addDoc(expenseCollection, expenseToCreate)
 
     const expenseId = expenseRef?.id
 
-    console.log({ message: "createExpense", expenseRef, expenseId })
     return expenseId
   } catch (error) {
     throw new Error(error)

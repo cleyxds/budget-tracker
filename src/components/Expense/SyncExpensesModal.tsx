@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 
+import { useUserStore } from "../../stores/User"
 import { useExpensesStore, TExpense } from "../../stores/Expenses"
 
 import { expensesActions } from "../../services/expenses"
@@ -14,6 +15,9 @@ type TanonymousExpensesToSync = {
 }
 
 export function SyncExpensesModal({ actions }) {
+  const { user } = useUserStore()
+  const { userId } = user
+
   const { expenses, getAnonymousExpenses, toggleSyncModal } = useExpensesStore()
   const { userExpenses } = expenses
 
@@ -38,7 +42,7 @@ export function SyncExpensesModal({ actions }) {
     try {
       const firstExpense = anonymousExpenses?.[0]
 
-      await expensesActions?.createExpense(firstExpense)
+      await expensesActions?.createExpense(firstExpense, userId)
     } catch (error) {
       console.warn(error)
     } finally {

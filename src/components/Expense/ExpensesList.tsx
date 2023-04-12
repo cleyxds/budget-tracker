@@ -36,7 +36,7 @@ export function ExpensesList() {
       <section className={styles.expensesContainer}>
         <ul>
           {userExpenses?.map(expense => (
-            <ExpenseItem key={expense?.id} {...expense} />
+            <ExpenseItem key={expense?.createdAt} {...expense} />
           ))}
         </ul>
       </section>
